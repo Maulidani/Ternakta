@@ -5,7 +5,7 @@ plugins {
 
 android {
     compileSdkVersion 31
-    buildToolsVersion "31.0.0"
+    buildToolsVersion "30.0.3"
 
     defaultConfig {
         applicationId "com.startup.ternakta"
@@ -42,7 +42,7 @@ dependencies {
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     //image picker
-    implementation 'com.github.dhaval2404:imagepicker:2.1'
+//    implementation 'com.github.dhaval2404:imagepicker:2.1'
 
     //Cirle Image
     implementation 'de.hdodenhof:circleimageview:3.1.0'
@@ -51,8 +51,8 @@ dependencies {
     implementation 'com.github.smarteist:autoimageslider:1.4.0'
 
     //viewmodel & livedata
-    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0-rc01'
-    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.0-rc01'
+//    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.0-rc01'
+//    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.4.0-rc01'
 
     // retrofit & gson
     implementation 'com.squareup.retrofit2:retrofit:2.6.1'
@@ -75,9 +75,7 @@ dependencies {
 
     //midtrans (payment gateway)
     implementation 'com.midtrans:uikit:1.28.0-SANDBOX' // change the number to the latest version
-
     implementation 'com.koushikdutta.ion:ion:3.1.0'
-
 
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'

@@ -5,7 +5,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.RecyclerView
 import com.startup.ternakta.R
+import com.startup.ternakta.model.ProductModel
 
 class CartFragment : Fragment() {
 
