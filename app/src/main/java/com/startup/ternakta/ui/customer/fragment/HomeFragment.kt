@@ -20,7 +20,8 @@ import com.startup.ternakta.model.SliderItem
 class HomeFragment : Fragment() {
 
     var sliderItem = ArrayList<SliderItem>()
-    var productItem = ArrayList<ProductModel>()
+    var productPromo = ArrayList<ProductModel>()
+    var productNewAdded = ArrayList<ProductModel>()
     val rvProductPromo: RecyclerView by lazy { requireActivity().findViewById(R.id.rvPromo) }
     val rvProductNew: RecyclerView by lazy { requireActivity().findViewById(R.id.rvNewAdded) }
 
@@ -43,9 +44,19 @@ class HomeFragment : Fragment() {
         sliderItem.add( SliderItem("name 02","description 02",image2))
         sliderItem.add( SliderItem("name 03","description 03",image3))
 
-        productItem.add(ProductModel("product 01","20000",image1))
-        productItem.add(ProductModel("product 02","25000",image2))
-        productItem.add(ProductModel("product 03","70000",image3))
+        productPromo.add(ProductModel("product 01","20000",image1))
+        productPromo.add(ProductModel("product 02","25000",image2))
+        productPromo.add(ProductModel("product 03","70000",image3))
+
+        productNewAdded.add(ProductModel("product 01","20000",image1))
+        productNewAdded.add(ProductModel("product 02","25000",image2))
+        productNewAdded.add(ProductModel("product 03","70000",image3))
+        productNewAdded.add(ProductModel("product 04","20000",image1))
+        productNewAdded.add(ProductModel("product 05","25000",image2))
+        productNewAdded.add(ProductModel("product 06","70000",image3))
+        productNewAdded.add(ProductModel("product 07","20000",image1))
+        productNewAdded.add(ProductModel("product 08","25000",image2))
+        productNewAdded.add(ProductModel("product 09","70000",image3))
 
     }
 
@@ -58,12 +69,13 @@ class HomeFragment : Fragment() {
         sliderBanner.setSliderTransformAnimation(SliderAnimations.SIMPLETRANSFORMATION);
         sliderBanner.startAutoCycle();
 
-        val adapter = ProductAdapter("home", productItem)
+        val adapterPromo = ProductAdapter("home", productPromo)
         rvProductPromo.layoutManager = GridLayoutManager(requireContext(), 2);
-        rvProductPromo.adapter = adapter
+        rvProductPromo.adapter = adapterPromo
 
+        val adapterNewProduct = ProductAdapter("home", productNewAdded)
         rvProductNew.layoutManager = GridLayoutManager(requireContext(), 2);
-        rvProductNew.adapter = adapter
-
+        rvProductNew.adapter = adapterNewProduct
     }
+
 }

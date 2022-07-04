@@ -6,16 +6,26 @@
         <entry key="../../Android/Sdk/platforms/android-31/data/res/layout/list_content.xml" value="0.19583333333333333" />
         <entry key="app/src/main/res/drawable/background_header.xml" value="0.1115" />
         <entry key="app/src/main/res/drawable/ic_article.xml" value="0.1255" />
+        <entry key="app/src/main/res/drawable/ic_back.xml" value="0.1255" />
         <entry key="app/src/main/res/drawable/ic_cart.xml" value="0.1255" />
+        <entry key="app/src/main/res/drawable/ic_dot_profile.xml" value="0.1255" />
         <entry key="app/src/main/res/drawable/ic_home.xml" value="0.1255" />
-        <entry key="app/src/main/res/layout/activity_login.xml" value="0.1" />
+        <entry key="app/src/main/res/drawable/ic_more.xml" value="0.1255" />
+        <entry key="app/src/main/res/drawable/state_bottom_navigation.xml" value="0.1255" />
+        <entry key="app/src/main/res/layout/activity_login.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.19583333333333333" />
         <entry key="app/src/main/res/layout/activity_main_customer.xml" value="0.17119565217391305" />
         <entry key="app/src/main/res/layout/activity_main_seller.xml" value="0.17119565217391305" />
         <entry key="app/src/main/res/layout/activity_product.xml" value="0.19583333333333333" />
+        <entry key="app/src/main/res/layout/activity_registration.xml" value="0.19583333333333333" />
         <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.19583333333333333" />
         <entry key="app/src/main/res/layout/fragment_article.xml" value="0.19583333333333333" />
-        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.19084967320261437" />
-        <entry key="app/src/main/res/layout/item_article.xml" value="0.2100456621004566" />
+        <entry key="app/src/main/res/layout/fragment_cart.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_home.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/item_article.xml" value="0.3927893738140417" />
+        <entry key="app/src/main/res/layout/item_cart.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/item_cart_child.xml" value="0.25" />
         <entry key="app/src/main/res/layout/item_product.xml" value="0.33" />
         <entry key="app/src/main/res/layout/item_slider_banner.xml" value="0.19479166666666667" />
         <entry key="app/src/main/res/menu/navigation_menu.xml" value="0.1" />

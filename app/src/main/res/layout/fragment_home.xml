@@ -13,7 +13,7 @@
 
         <androidx.appcompat.widget.AppCompatImageView
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="180dp"
             android:background="@drawable/background_header"
             app:layout_constraintTop_toTopOf="parent" />
 
