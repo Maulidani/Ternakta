@@ -12,6 +12,7 @@ import coil.load
 import com.startup.ternakta.R
 import com.startup.ternakta.model.ArticleModel
 import com.startup.ternakta.model.ProductModel
+import de.hdodenhof.circleimageview.CircleImageView
 
 
 class ArticleAdapter(
@@ -20,6 +21,8 @@ class ArticleAdapter(
 
     inner class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
+        private val imgProfileArticle: CircleImageView by lazy { itemView.findViewById(R.id.imgProfileArticle) }
+        private val nameProfileArticle: TextView by lazy { itemView.findViewById(R.id.tvNameProfile) }
         private val imgArticle: ImageView by lazy { itemView.findViewById(R.id.imgArticle) }
         private val nameArticle: TextView by lazy { itemView.findViewById(R.id.tvName) }
         private val descArticle: TextView by lazy { itemView.findViewById(R.id.tvDescription) }
@@ -27,8 +30,10 @@ class ArticleAdapter(
 
         fun bindData(list: ArticleModel) {
 
-            imgArticle.load(list.image)
+            imgProfileArticle.load(list.imageProfile)
+            nameProfileArticle.text = list.name
 
+            imgArticle.load(list.image)
             nameArticle.text = list.name
             descArticle.text = list.description
 

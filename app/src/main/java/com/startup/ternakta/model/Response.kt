@@ -12,4 +12,5 @@ data class ArticleModel(
     var name : String,
     var description : String,
     var image : String,
+    var imageProfile : String,
 )
