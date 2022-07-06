@@ -45,7 +45,7 @@ class ProductController
                         return response()->json([
                             'message' => 'Success',
                             'errors' => false,
-                            'user' => $add_product
+                            'product' => $add_product
                         ]);
 
                     } else {
@@ -115,7 +115,7 @@ class ProductController
                         return response()->json([
                             'message' => 'Success',
                             'errors' => false,
-                            'user' => $edit_product
+                            'product' => $edit_product
                         ]);
     
                     } else {
@@ -234,6 +234,28 @@ class ProductController
                     'data' => $product,
                 ]);
             }
+        }
+    }
+
+    public function showDetailProduct(Request $request)
+    {
+        $product_id = $request->product_id;
+
+        $product = Product::where('id',$product_id)
+        ->first();
+
+        if ($product) {
+            return response()->json([
+                'message' => 'Success',
+                'errors' => false,
+                'product' => $product,
+            ]);
+        } else {
+            return response()->json([
+                'message' => 'Failed',
+                'errors' => true,
+            ]);
+           
         }
     }
 

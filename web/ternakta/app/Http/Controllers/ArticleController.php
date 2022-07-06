@@ -29,19 +29,19 @@ class ArticleController
 
                     $image->move(public_path() . '/image/article/', $filename);
 
-                    $add_product = new Article;
-                    $add_product->user_store_id = $user_store_id;
-                    $add_product->title = $title;
-                    $add_product->description = $description;
-                    $add_product->image = $filename;
-                    $add_product->save();
+                    $add_article = new Article;
+                    $add_article->user_store_id = $user_store_id;
+                    $add_article->title = $title;
+                    $add_article->description = $description;
+                    $add_article->image = $filename;
+                    $add_article->save();
                    
-                    if ($add_product) {
+                    if ($add_article) {
 
                         return response()->json([
                             'message' => 'Success',
                             'errors' => false,
-                            'user' => $add_product
+                            'article' => $add_article
                         ]);
 
                     } else {
@@ -107,7 +107,7 @@ class ArticleController
                         return response()->json([
                             'message' => 'Success',
                             'errors' => false,
-                            'user' => $edit_article
+                            'article' => $edit_article
                         ]);
     
                     } else {
@@ -132,7 +132,7 @@ class ArticleController
                     return response()->json([
                         'message' => 'Success',
                         'errors' => false,
-                        'user' => $edit_article
+                        'article' => $edit_article
                     ]);
 
                 } else {
