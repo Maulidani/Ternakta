@@ -16,24 +16,25 @@
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup,android:usesCleartextTraffic">
         <activity
+            android:name=".ui.admin.MainAdminActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.RegistrationActivity"
             android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ui.LoginActivity"
-            android:windowSoftInputMode="adjustResize"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".ui.seller.MainSellerActivity" />
+        <activity android:name=".ui.customer.MainCustomerActivity" />
+        <activity
+            android:name=".ui.SplashScreenActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity android:name=".ui.seller.MainSellerActivity" />
-        <activity android:name=".ui.customer.MainCustomerActivity" />
-        <activity
-            android:name=".ui.SplashScreenActivity"
-            android:exported="true">
-
         </activity>
         <activity android:name=".MainActivity" />
     </application>

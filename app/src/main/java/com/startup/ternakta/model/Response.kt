@@ -14,6 +14,7 @@ data class ArticleModel(
     var image : String,
     var imageProfile : String,
 )
+
 data class CartShopModel(
     var name : String,
     var image : String,
