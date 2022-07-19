@@ -1,5 +1,6 @@
 package com.startup.ternakta.adapter
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,15 +8,18 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.startup.ternakta.R
 import com.startup.ternakta.model.ProductModel
+import com.startup.ternakta.ui.ProductDetailActivity
 
 
 class ProductAdapter(
-    private val type:String,
-    private val list: List<ProductModel>) :
+    private val type: String,
+    private val list: List<ProductModel>
+) :
     RecyclerView.Adapter<ProductAdapter.ListViewHolder>() {
 
     val _type = type
@@ -36,6 +40,11 @@ class ProductAdapter(
 
             item.setOnClickListener {
                 Toast.makeText(itemView.context, list.name, Toast.LENGTH_SHORT).show()
+                ContextCompat.startActivity(
+                    itemView.context,
+                    Intent(itemView.context, ProductDetailActivity::class.java),
+                    null
+                )
             }
         }
     }
@@ -51,9 +60,9 @@ class ProductAdapter(
     }
 
     override fun getItemCount(): Int {
-        return if (_type == "home"){
+        return if (_type == "home") {
 
-            if (list.size <=6 ){
+            if (list.size <= 6) {
                 list.size
             } else {
                 6
