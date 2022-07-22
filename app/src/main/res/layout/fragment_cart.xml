@@ -71,7 +71,7 @@
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rvCart"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginTop="12dp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/tvMyPlace"
@@ -85,7 +85,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/parentTotalPrice"
-            android:background="@color/yellow"
+            android:background="@color/light_gray"
             app:layout_constraintBottom_toBottomOf="parent">
 
             <androidx.appcompat.widget.AppCompatTextView
@@ -95,7 +95,7 @@
                 android:layout_marginStart="18dp"
                 android:layout_marginTop="18dp"
                 android:text="Total harga"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -105,7 +105,7 @@
                 android:layout_marginLeft="18dp"
                 android:text="Rp."
                 android:textSize="18dp"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textStyle="bold"
                 android:id="@+id/tvRp"
                 app:layout_constraintLeft_toLeftOf="parent"
@@ -118,7 +118,7 @@
                 android:text="8000"
                 app:layout_constraintBottom_toBottomOf="parent"
                 android:textSize="18dp"
-                android:textColor="@color/white"
+                android:textColor="@color/black"
                 android:textStyle="bold"
                 android:layout_marginBottom="18dp"
                 app:layout_constraintTop_toTopOf="@+id/tvRp"
@@ -132,9 +132,9 @@
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginRight="18dp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:textColor="@color/yellow"
+                android:textColor="@color/white"
                 android:textAllCaps="false"
-                android:backgroundTint="@color/white"
+                android:backgroundTint="@color/yellow"
                 app:layout_constraintRight_toRightOf="parent"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
 

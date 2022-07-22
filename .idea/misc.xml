@@ -17,9 +17,9 @@
         <entry key="app/src/main/res/drawable/state_bottom_navigation.xml" value="0.1255" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.22" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.19583333333333333" />
-        <entry key="app/src/main/res/layout/activity_main_admin.xml" value="0.19583333333333333" />
+        <entry key="app/src/main/res/layout/activity_main_admin.xml" value="0.15" />
         <entry key="app/src/main/res/layout/activity_main_customer.xml" value="0.17119565217391305" />
-        <entry key="app/src/main/res/layout/activity_main_seller.xml" value="0.22" />
+        <entry key="app/src/main/res/layout/activity_main_seller.xml" value="0.2" />
         <entry key="app/src/main/res/layout/activity_product.xml" value="0.19583333333333333" />
         <entry key="app/src/main/res/layout/activity_product_detail.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_product_list.xml" value="0.13333333333333333" />
