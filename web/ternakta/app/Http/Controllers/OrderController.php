@@ -37,7 +37,7 @@ class OrderController
             return response()->json([
                         'message' => 'Failed',
                         'errors' => true,
-                    ]);
+            ]);
         } else {
          
             $add_order = new Order;
@@ -219,7 +219,8 @@ class OrderController
         }
     }    
 
-    public function addStatusOrder(Request $request){
+    public function addStatusOrder(Request $request)
+    {
         
         $order_id = $request->order_id;
         $status = $request->status;

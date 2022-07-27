@@ -372,7 +372,6 @@ class UserController
         $username = $request->username;
         $phone = $request->phone;
         $password = $request->password;
-        $type = $request->type;
 
         if($type == 'store') {
 
