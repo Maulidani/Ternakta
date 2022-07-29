@@ -1,4 +1,4 @@
-package com.startup.ternakta.ui
+package com.startup.ternakta.ui.seller
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -12,26 +12,22 @@ import com.startup.ternakta.R
 import com.startup.ternakta.network.ApiClient
 import com.startup.ternakta.network.Model
 import com.startup.ternakta.ui.customer.MainCustomerActivity
-import com.startup.ternakta.ui.customer.Registration2CustomerActivity
-import com.startup.ternakta.ui.customer.RegistrationCustomerActivity
-import com.startup.ternakta.ui.seller.LoginSellerActivity
 import com.startup.ternakta.utils.Constant.setShowProgress
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class LoginActivity : AppCompatActivity() {
-    private val TAG = "Login"
-    private val userType = "customer"
+class LoginSellerActivity : AppCompatActivity() {
+    private val TAG = "LoginSeller"
+    private val userType = "store"
     private val btnLogin : MaterialButton by lazy { findViewById(R.id.btnLogin) }
-    private val tvLoginSeller : TextView by lazy { findViewById(R.id.tvLoginSeller) }
     private val tvRegistration : TextView by lazy { findViewById(R.id.tvRegistration) }
     private val inputPhone: TextInputEditText by lazy { findViewById(R.id.inputPhone) }
     private val inputPassword: TextInputEditText by lazy { findViewById(R.id.inputPassword) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_login)
+        setContentView(R.layout.activity_login_seller)
 
         onClick()
     }
@@ -48,11 +44,8 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(applicationContext, "Lengkapi data", Toast.LENGTH_SHORT).show()
             }
         }
-        tvLoginSeller.setOnClickListener {
-            startActivity(Intent(applicationContext, LoginSellerActivity::class.java))
-        }
         tvRegistration.setOnClickListener {
-            startActivity(Intent(applicationContext, RegistrationCustomerActivity::class.java))
+            startActivity(Intent(applicationContext, RegistrationSellerActivity::class.java))
         }
     }
 
@@ -72,7 +65,7 @@ class LoginActivity : AppCompatActivity() {
                     if (response.isSuccessful && message == "Success") {
                         Log.e(TAG, "onResponse: $responseBody")
 //                        saveSession(user)
-                        startActivity(Intent(applicationContext, MainCustomerActivity::class.java))
+                        startActivity(Intent(applicationContext, MainSellerActivity::class.java))
 
                     } else {
                         Log.e(TAG, "onResponse: $response")

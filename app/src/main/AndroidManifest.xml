@@ -16,15 +16,11 @@
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup,android:usesCleartextTraffic">
         <activity
-            android:name=".ui.seller.Registration3SellerActivity"
-            android:exported="false"
-            android:windowSoftInputMode="adjustResize"  />
+            android:name=".ui.seller.LoginSellerActivity"
+            android:windowSoftInputMode="adjustResize"
+            android:exported="false" />
         <activity
-            android:name=".ui.customer.Registration2CustomerActivity"
-            android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
-        <activity
-            android:name=".ui.seller.Registration2SellerActivity"
+            android:name=".ui.seller.RegistrationSellerActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
@@ -32,7 +28,15 @@
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
-            android:name=".ui.seller.RegistrationSellerActivity"
+            android:name=".ui.seller.Registration2SellerActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ui.customer.Registration2CustomerActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ui.seller.Registration3SellerActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
         <activity
@@ -42,9 +46,7 @@
             android:name=".ui.ProductDetailActivity"
             android:exported="false" />
         <activity android:name=".ui.ProductListActivity" />
-        <activity android:name=".ui.admin.MainAdminActivity" >
-
-        </activity>
+        <activity android:name=".ui.admin.MainAdminActivity"></activity>
         <activity
             android:name=".ui.RegistrationActivity"
             android:windowSoftInputMode="adjustResize" />
@@ -52,20 +54,17 @@
             android:name=".ui.LoginActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".ui.seller.MainSellerActivity" >
+        <activity android:name=".ui.seller.MainSellerActivity"></activity>
+        <activity android:name=".ui.customer.MainCustomerActivity" />
+        <activity
+            android:name=".ui.SplashScreenActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.customer.MainCustomerActivity" />
-        <activity
-            android:name=".ui.SplashScreenActivity"
-            android:exported="true" />
-
-
-
         <activity android:name=".MainActivity" />
     </application>
 

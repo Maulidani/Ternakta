@@ -27,25 +27,26 @@
             android:src="@drawable/logo" />
 
     </androidx.appcompat.widget.LinearLayoutCompat>
+
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvHead"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
         android:gravity="left|top"
-        android:text="Buat akun toko"
+        android:text="izin usaha"
         android:textColor="@color/black"
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintTop_toBottomOf="@+id/parent_head" />
 
     <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/nameTextField"
+        android:id="@+id/businessPermitTextField"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="18dp"
-        android:hint="   Nama toko"
+        android:hint="   upload izin usaha"
         app:boxCornerRadiusBottomEnd="60dp"
         app:boxCornerRadiusBottomStart="60dp"
         app:boxCornerRadiusTopEnd="60dp"
@@ -53,87 +54,29 @@
         app:layout_constraintTop_toBottomOf="@id/tvHead">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/inputName"
+            android:id="@+id/inputBusinessPermit"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:inputType="text"
             android:textSize="12sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
-        android:id="@+id/parentImgPhonePassword"
-        app:layout_constraintTop_toBottomOf="@id/nameTextField">
-
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/imgProfile"
-            android:layout_width="110dp"
-            android:layout_height="120dp"
-            android:src="@drawable/ic_profile"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/phoneTextField"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:hint="   Telepon"
-            app:boxCornerRadiusBottomEnd="60dp"
-            app:boxCornerRadiusBottomStart="60dp"
-            app:boxCornerRadiusTopEnd="60dp"
-            app:boxCornerRadiusTopStart="60dp"
-            app:layout_constraintBottom_toTopOf="@id/passwordTextField"
-            app:layout_constraintLeft_toRightOf="@id/imgProfile"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="@id/imgProfile">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/inputPhone"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="number"
-                android:textSize="12sp" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/passwordTextField"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="6dp"
-            android:hint="   Kata sandi"
-            app:boxCornerRadiusBottomEnd="60dp"
-            app:boxCornerRadiusBottomStart="60dp"
-            app:boxCornerRadiusTopEnd="60dp"
-            app:boxCornerRadiusTopStart="60dp"
-            app:endIconMode="password_toggle"
-            app:layout_constraintBottom_toBottomOf="@id/imgProfile"
-            app:layout_constraintLeft_toRightOf="@id/imgProfile"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/phoneTextField">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/inputPassword"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPassword"
-                android:textSize="12sp" />
-        </com.google.android.material.textfield.TextInputLayout>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_marginTop="24dp"
+        android:text="* bla bla bla"
+        android:textColor="@color/black"
+        android:textSize="12sp"
+        app:layout_constraintTop_toBottomOf="@+id/businessPermitTextField" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnAdd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:paddingVertical="8dp"
         android:layout_marginBottom="12dp"
+        android:paddingVertical="8dp"
         android:text="Lanjut"
         android:textAllCaps="false"
         android:textColor="@color/white"

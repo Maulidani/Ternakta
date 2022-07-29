@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingHorizontal="18dp"
-    tools:context=".ui.LoginActivity">
+    tools:context=".ui.seller.LoginSellerActivity">
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/parent_head"
@@ -26,7 +26,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
         android:gravity="left|top"
-        android:text="Masuk"
+        android:text="Masuk toko"
         android:textColor="@color/black"
         android:textSize="18sp"
         android:textStyle="bold"
@@ -38,7 +38,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="6dp"
         android:gravity="left|top"
-        android:text="Silahkan masuk dengan akun yang sudah terdaftar"
+        android:text="Silahkan masuk dengan akun toko yang sudah terdaftar"
         android:textColor="@color/black"
         android:textSize="12sp"
         app:layout_constraintTop_toBottomOf="@+id/tvHead" />
@@ -95,16 +95,6 @@
             android:textSize="12sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvLoginSeller"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="Masuk sebagai penjual."
-        android:textColor="@color/black"
-        android:textSize="12sp"
-        app:layout_constraintTop_toBottomOf="@+id/passwordTextField" />
-
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnLogin"
         android:layout_width="match_parent"
@@ -119,4 +109,5 @@
         android:layout_marginBottom="12dp"
         app:iconPadding="0dp"
         app:layout_constraintBottom_toBottomOf="parent" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

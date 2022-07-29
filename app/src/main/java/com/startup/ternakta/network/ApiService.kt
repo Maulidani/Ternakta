@@ -62,8 +62,8 @@ interface ApiService {
     @FormUrlEncoded
     @POST("login-user")
     fun loginUser(
-        @Field("type") userType: String,
-        @Field("phone") phone: String, // (store, customer)
+        @Field("type") userType: String, // (store, customer)
+        @Field("phone") phone: String,
         @Field("password") password: String,
         @Field("username") username: String, // admin
     ): Call<Model.ResponseModel>  // response : user{}
