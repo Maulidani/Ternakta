@@ -7,6 +7,8 @@ class PreferencesHelper(context: Context) {
     companion object {
         const val PREF_USER_ID = "ID"
         const val PREF_USER_TYPE = "TYPE"
+        const val PREF_USER_PHONE = "PHONE"
+        const val PREF_USER_PASSWORD = "PASSWORD"
         const val PREF_IS_LOGIN = "LOGIN"
     }
 

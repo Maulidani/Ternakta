@@ -5,9 +5,9 @@ class Model {
         val message: String,
         val errors: Boolean,
 
-        val data: List<DataModel>,
+        val data: ArrayList<DataModel>,
         val user: UserModel,
-        val product: ProductModel,
+        val product: ArrayList<DataModel>,
         val article: ArticleModel,
         val order: OrderModel,
     )
@@ -29,7 +29,10 @@ class Model {
         val status: String, // store
 
         //product, cart
+        val product_id: String,
         val user_store_id: String,
+        val store_name: String,
+        val store_image: String,
 //        val name: String,
         val price: String,
         val price_promo: String,

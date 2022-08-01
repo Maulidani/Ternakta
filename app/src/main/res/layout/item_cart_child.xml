@@ -83,32 +83,7 @@
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_delete" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvMinus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="18dp"
-                android:text="-"
-                android:textColor="@color/black"
-                android:textSize="18sp"
-                android:textStyle="bold" />
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvCountProduct"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0"
-                android:textColor="@color/black" />
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvPlus"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingStart="18dp"
-                android:text="+"
-                android:textColor="@color/black"
-                android:textSize="18sp"
-                android:textStyle="bold" />
         </androidx.appcompat.widget.LinearLayoutCompat>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

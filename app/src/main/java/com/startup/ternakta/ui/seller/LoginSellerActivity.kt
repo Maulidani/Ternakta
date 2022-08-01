@@ -13,6 +13,7 @@ import com.startup.ternakta.network.ApiClient
 import com.startup.ternakta.network.Model
 import com.startup.ternakta.ui.customer.MainCustomerActivity
 import com.startup.ternakta.utils.Constant.setShowProgress
+import com.startup.ternakta.utils.PreferencesHelper
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -20,6 +21,8 @@ import retrofit2.Response
 class LoginSellerActivity : AppCompatActivity() {
     private val TAG = "LoginSeller"
     private val userType = "store"
+    private lateinit var sharedPref: PreferencesHelper
+
     private val btnLogin : MaterialButton by lazy { findViewById(R.id.btnLogin) }
     private val tvRegistration : TextView by lazy { findViewById(R.id.tvRegistration) }
     private val inputPhone: TextInputEditText by lazy { findViewById(R.id.inputPhone) }
@@ -28,6 +31,8 @@ class LoginSellerActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login_seller)
+
+        sharedPref = PreferencesHelper(applicationContext)
 
         onClick()
     }
@@ -45,7 +50,7 @@ class LoginSellerActivity : AppCompatActivity() {
             }
         }
         tvRegistration.setOnClickListener {
-            startActivity(Intent(applicationContext, RegistrationSellerActivity::class.java))
+            startActivity(Intent(applicationContext, Registration2SellerActivity::class.java))
         }
     }
 
@@ -64,8 +69,7 @@ class LoginSellerActivity : AppCompatActivity() {
 
                     if (response.isSuccessful && message == "Success") {
                         Log.e(TAG, "onResponse: $responseBody")
-//                        saveSession(user)
-                        startActivity(Intent(applicationContext, MainSellerActivity::class.java))
+                        saveSession(user)
 
                     } else {
                         Log.e(TAG, "onResponse: $response")
@@ -85,18 +89,39 @@ class LoginSellerActivity : AppCompatActivity() {
             })
     }
 
-//    private fun saveSession(user: Model.UserModel?) {
+    private fun saveSession(user: Model.UserModel?) {
+
+        sharedPref.logout()
+        sharedPref.put(PreferencesHelper.PREF_USER_ID, user!!.id)
+        sharedPref.put(PreferencesHelper.PREF_USER_TYPE, userType)
+        sharedPref.put(PreferencesHelper.PREF_USER_PHONE, user.phone)
+        sharedPref.put(PreferencesHelper.PREF_USER_PASSWORD, user.password)
+        sharedPref.put(PreferencesHelper.PREF_IS_LOGIN, true)
+
+        Log.e(TAG, "saveSession: "+sharedPref.getString(PreferencesHelper.PREF_USER_ID).toString(), )
+        Log.e(TAG, "saveSession: "+sharedPref.getString(PreferencesHelper.PREF_USER_TYPE).toString(), )
+        Log.e(TAG, "saveSession: "+sharedPref.getString(PreferencesHelper.PREF_USER_PHONE).toString(), )
+        Log.e(TAG, "saveSession: "+sharedPref.getString(PreferencesHelper.PREF_USER_PASSWORD).toString(), )
+        Log.e(TAG, "saveSession: "+sharedPref.getBoolean(PreferencesHelper.PREF_IS_LOGIN).toString(), )
+
+        startActivity(Intent(applicationContext, MainSellerActivity::class.java))
+        finish()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+//        if (sharedPref.getBoolean(PreferencesHelper.PREF_IS_LOGIN)) {
+//            if (sharedPref.getString(PreferencesHelper.PREF_USER_TYPE) == "customer") {
+//                startActivity(Intent(applicationContext, MainSellerActivity::class.java))
+//                finish()
 //
-//        sharedPref.logout()
-//        sharedPref.put(PreferencesHelper.PREF_USER_ID, user!!.id)
-//        sharedPref.put(PreferencesHelper.PREF_USER_TYPE, userType)
-//        sharedPref.put(PreferencesHelper.PREF_IS_LOGIN, true)
+//            } else {
+//                //
+//            }
 //
-//        Log.e(TAG, "saveSession: "+sharedPref.getString(PreferencesHelper.PREF_USER_ID).toString(), )
-//        Log.e(TAG, "saveSession: "+sharedPref.getString(PreferencesHelper.PREF_USER_TYPE).toString(), )
-//        Log.e(TAG, "saveSession: "+sharedPref.getBoolean(PreferencesHelper.PREF_IS_LOGIN).toString(), )
-//
-//        startActivity(Intent(applicationContext, CustomerMainActivity::class.java))
-//        finish()
-//    }
+//        } else {
+//            //
+//        }
+    }
 }

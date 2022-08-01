@@ -7,19 +7,16 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.startup.ternakta.R
-import com.startup.ternakta.model.ArticleModel
-import com.startup.ternakta.model.CartProductModel
-import com.startup.ternakta.model.CartShopModel
-import com.startup.ternakta.model.ProductModel
-import de.hdodenhof.circleimageview.CircleImageView
+import com.startup.ternakta.network.Model
+import com.startup.ternakta.utils.Constant
 
 
 class CartProductAdapter(
-    private val list: List<CartProductModel>) :
+    private val list: List<Model.DataModel>
+) :
     RecyclerView.Adapter<CartProductAdapter.ListViewHolder>() {
 
     inner class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -27,28 +24,20 @@ class CartProductAdapter(
         private val imgProductCart: ImageView by lazy { itemView.findViewById(R.id.imgProductCart) }
         private val nameProduct: TextView by lazy { itemView.findViewById(R.id.tvNameProduct) }
         private val priceProduct: TextView by lazy { itemView.findViewById(R.id.tvPrice) }
-        private val countProduct: TextView by lazy { itemView.findViewById(R.id.tvCountProduct) }
-        private val minus: TextView by lazy { itemView.findViewById(R.id.tvMinus) }
-        private val plus: TextView by lazy { itemView.findViewById(R.id.tvPlus) }
         private val delete: ImageView by lazy { itemView.findViewById(R.id.imgDelete) }
         private val item: CardView by lazy { itemView.findViewById(R.id.itemCardCartChild) }
 
-        fun bindData(list: CartProductModel) {
+        fun bindData(list: Model.DataModel) {
 
-            imgProductCart.load(list.image)
-            var count = list.count.toInt()
+            val urlProductCart = Constant.IMAGE_URL_PRODUCT + list.image
+            imgProductCart.load(urlProductCart)
 
             nameProduct.text = list.name
-            priceProduct.text = list.price
-            countProduct.text = count.toString()
 
-            minus.setOnClickListener {
-                count -= 1
-                countProduct.text = count.toString()
-            }
-            plus.setOnClickListener {
-                count += 1
-                countProduct.text = count.toString()
+            if (list.price_promo != "") {
+                priceProduct.text = list.price_promo
+            } else {
+                priceProduct.text = list.price
             }
 
             delete.setOnClickListener {

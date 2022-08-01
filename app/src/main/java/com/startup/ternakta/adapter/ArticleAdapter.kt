@@ -10,35 +10,34 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.startup.ternakta.R
-import com.startup.ternakta.model.ArticleModel
-import com.startup.ternakta.model.ProductModel
+import com.startup.ternakta.network.Model
+import com.startup.ternakta.utils.Constant
 import de.hdodenhof.circleimageview.CircleImageView
 
 
 class ArticleAdapter(
-    private val list: List<ArticleModel>) :
+    private val list: ArrayList<Model.DataModel>) :
     RecyclerView.Adapter<ArticleAdapter.ListViewHolder>() {
 
     inner class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        private val imgProfileArticle: CircleImageView by lazy { itemView.findViewById(R.id.imgProfileArticle) }
-        private val nameProfileArticle: TextView by lazy { itemView.findViewById(R.id.tvNameProfile) }
         private val imgArticle: ImageView by lazy { itemView.findViewById(R.id.imgArticle) }
         private val nameArticle: TextView by lazy { itemView.findViewById(R.id.tvName) }
         private val descArticle: TextView by lazy { itemView.findViewById(R.id.tvDescription) }
         private val item: CardView by lazy { itemView.findViewById(R.id.itemCardArticle) }
 
-        fun bindData(list: ArticleModel) {
+        fun bindData(list: Model.DataModel) {
 
-            imgProfileArticle.load(list.imageProfile)
-            nameProfileArticle.text = list.name
+//            nameProfileArticle.text = list.title
 
-            imgArticle.load(list.image)
-            nameArticle.text = list.name
+            val urlArticle = "${Constant.IMAGE_URL_ARTICLE}${list.image}"
+            imgArticle.load(urlArticle)
+
+            nameArticle.text = list.title
             descArticle.text = list.description
 
             item.setOnClickListener {
-                Toast.makeText(itemView.context, list.name, Toast.LENGTH_SHORT).show()
+                Toast.makeText(itemView.context, list.title, Toast.LENGTH_SHORT).show()
             }
         }
     }

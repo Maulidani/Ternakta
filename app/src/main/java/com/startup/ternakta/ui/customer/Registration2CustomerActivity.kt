@@ -12,15 +12,22 @@ import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import com.startup.ternakta.R
+import com.startup.ternakta.network.ApiClient
+import com.startup.ternakta.network.Model
+import com.startup.ternakta.utils.Constant.setShowProgress
 import de.hdodenhof.circleimageview.CircleImageView
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import okhttp3.RequestBody.Companion.asRequestBody
+import okhttp3.RequestBody.Companion.toRequestBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.io.File
 
 class Registration2CustomerActivity : AppCompatActivity() {
-    private val TAG = "RegistrationCustomer"
+    private val TAG = "Registration2Customer"
     private val userType = "customer"
 
     private val btnAdd: MaterialButton by lazy { findViewById(R.id.btnAdd) }
@@ -65,7 +72,8 @@ class Registration2CustomerActivity : AppCompatActivity() {
             val password = inputPassword.text.toString()
 
             if (name.isNotEmpty() && phone.isNotEmpty() && password.isNotEmpty() &&
-                intentProvince != "" && intentCity != "" && intentDistricts != "" && intentAddress != "") {
+                intentProvince != "" && intentCity != "" && intentDistricts != "" && intentAddress != ""
+            ) {
 
                 if (phone.length < 9) {
                     Toast.makeText(
@@ -84,8 +92,14 @@ class Registration2CustomerActivity : AppCompatActivity() {
                 } else {
                     if (partImage != null) {
 
-                        registerUser(intentProvince, intentCity, intentDistricts, intentAddress, name, phone, password,
-                            partImage!!
+                        registerUser(
+                            intentProvince,
+                            intentCity,
+                            intentDistricts,
+                            intentAddress,
+                            name,
+                            phone,
+                            password,
                         )
                     } else {
                         Toast.makeText(applicationContext, "Lengkapi data foto", Toast.LENGTH_SHORT)
@@ -108,8 +122,67 @@ class Registration2CustomerActivity : AppCompatActivity() {
         name: String,
         phone: String,
         password: String,
-        image: MultipartBody.Part
     ) {
+        btnAdd.setShowProgress(true)
+
+        val partProvince: RequestBody = province.toRequestBody("text/plain".toMediaTypeOrNull())
+        val partCity: RequestBody = city.toRequestBody("text/plain".toMediaTypeOrNull())
+        val partDistricts: RequestBody = districts.toRequestBody("text/plain".toMediaTypeOrNull())
+        val partAddress: RequestBody = address.toRequestBody("text/plain".toMediaTypeOrNull())
+        val partName: RequestBody = name.toRequestBody("text/plain".toMediaTypeOrNull())
+        val partPhone: RequestBody = phone.toRequestBody("text/plain".toMediaTypeOrNull())
+        val partPassword: RequestBody = password.toRequestBody("text/plain".toMediaTypeOrNull())
+        val partType: RequestBody = userType.toRequestBody("text/plain".toMediaTypeOrNull())
+        val partNull: RequestBody = "0".toRequestBody("text/plain".toMediaTypeOrNull())
+
+        ApiClient.instances.addUser(
+            partType,
+            businessPermission = partNull,
+            partName,
+            partImage!!,
+            partPhone,
+            partPassword,
+            partProvince,
+            partCity,
+            partDistricts,
+            partAddress,
+            status = partNull
+        ).enqueue(object : Callback<Model.ResponseModel> {
+            override fun onResponse(
+                call: Call<Model.ResponseModel>,
+                response: Response<Model.ResponseModel>
+            ) {
+                val responseBody = response.body()
+                val message = responseBody?.message
+                val user = responseBody?.user
+
+                if (response.isSuccessful && message == "Success") {
+                    Log.e(TAG, "onResponse: $responseBody")
+                    Toast.makeText(
+                        applicationContext,
+                        "Berhasil membuat akun, silahkan masuk",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                    finish()
+
+                } else {
+                    Log.e(TAG, "onResponse: $response")
+                    Toast.makeText(applicationContext, "Gagal", Toast.LENGTH_SHORT).show()
+
+                }
+                btnAdd.setShowProgress(false)
+
+            }
+
+            override fun onFailure(call: Call<Model.ResponseModel>, t: Throwable) {
+
+                Toast.makeText(applicationContext, t.message.toString(), Toast.LENGTH_SHORT)
+                    .show()
+                btnAdd.setShowProgress(false)
+            }
+
+        })
 
     }
 

@@ -16,6 +16,7 @@ import com.startup.ternakta.ui.customer.Registration2CustomerActivity
 import com.startup.ternakta.ui.customer.RegistrationCustomerActivity
 import com.startup.ternakta.ui.seller.LoginSellerActivity
 import com.startup.ternakta.utils.Constant.setShowProgress
+import com.startup.ternakta.utils.PreferencesHelper
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -23,6 +24,8 @@ import retrofit2.Response
 class LoginActivity : AppCompatActivity() {
     private val TAG = "Login"
     private val userType = "customer"
+    private lateinit var sharedPref: PreferencesHelper
+
     private val btnLogin : MaterialButton by lazy { findViewById(R.id.btnLogin) }
     private val tvLoginSeller : TextView by lazy { findViewById(R.id.tvLoginSeller) }
     private val tvRegistration : TextView by lazy { findViewById(R.id.tvRegistration) }
@@ -32,6 +35,8 @@ class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
+        sharedPref = PreferencesHelper(applicationContext)
 
         onClick()
     }
@@ -71,8 +76,7 @@ class LoginActivity : AppCompatActivity() {
 
                     if (response.isSuccessful && message == "Success") {
                         Log.e(TAG, "onResponse: $responseBody")
-//                        saveSession(user)
-                        startActivity(Intent(applicationContext, MainCustomerActivity::class.java))
+                        saveSession(user)
 
                     } else {
                         Log.e(TAG, "onResponse: $response")
@@ -92,18 +96,39 @@ class LoginActivity : AppCompatActivity() {
             })
     }
 
-//    private fun saveSession(user: Model.UserModel?) {
+    private fun saveSession(user: Model.UserModel?) {
+
+        sharedPref.logout()
+        sharedPref.put(PreferencesHelper.PREF_USER_ID, user!!.id)
+        sharedPref.put(PreferencesHelper.PREF_USER_TYPE, userType)
+        sharedPref.put(PreferencesHelper.PREF_USER_PHONE, user.phone)
+        sharedPref.put(PreferencesHelper.PREF_USER_PASSWORD, user.password)
+        sharedPref.put(PreferencesHelper.PREF_IS_LOGIN, true)
+
+        Log.e(TAG, "saveSession: "+sharedPref.getString(PreferencesHelper.PREF_USER_ID).toString(), )
+        Log.e(TAG, "saveSession: "+sharedPref.getString(PreferencesHelper.PREF_USER_TYPE).toString(), )
+        Log.e(TAG, "saveSession: "+sharedPref.getString(PreferencesHelper.PREF_USER_PHONE).toString(), )
+        Log.e(TAG, "saveSession: "+sharedPref.getString(PreferencesHelper.PREF_USER_PASSWORD).toString(), )
+        Log.e(TAG, "saveSession: "+sharedPref.getBoolean(PreferencesHelper.PREF_IS_LOGIN).toString(), )
+
+        startActivity(Intent(applicationContext, MainCustomerActivity::class.java))
+        finish()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+//        if (sharedPref.getBoolean(PreferencesHelper.PREF_IS_LOGIN)) {
+//            if (sharedPref.getString(PreferencesHelper.PREF_USER_TYPE) == "customer") {
+//                startActivity(Intent(applicationContext, MainCustomerActivity::class.java))
+//                finish()
 //
-//        sharedPref.logout()
-//        sharedPref.put(PreferencesHelper.PREF_USER_ID, user!!.id)
-//        sharedPref.put(PreferencesHelper.PREF_USER_TYPE, userType)
-//        sharedPref.put(PreferencesHelper.PREF_IS_LOGIN, true)
+//            } else {
+//                //
+//            }
 //
-//        Log.e(TAG, "saveSession: "+sharedPref.getString(PreferencesHelper.PREF_USER_ID).toString(), )
-//        Log.e(TAG, "saveSession: "+sharedPref.getString(PreferencesHelper.PREF_USER_TYPE).toString(), )
-//        Log.e(TAG, "saveSession: "+sharedPref.getBoolean(PreferencesHelper.PREF_IS_LOGIN).toString(), )
-//
-//        startActivity(Intent(applicationContext, CustomerMainActivity::class.java))
-//        finish()
-//    }
+//        } else {
+//            //
+//        }
+    }
 }

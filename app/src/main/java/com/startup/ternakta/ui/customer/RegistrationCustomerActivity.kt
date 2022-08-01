@@ -39,10 +39,11 @@ class RegistrationCustomerActivity : AppCompatActivity() {
                 Log.e(TAG, "Next: $province, $city, $districts, $address", )
                 startActivity(Intent(applicationContext, Registration2CustomerActivity::class.java)
                     .putExtra("province", province)
-                    .putExtra("city", province)
-                    .putExtra("districts", province)
-                    .putExtra("address", province)
+                    .putExtra("city", city)
+                    .putExtra("districts", districts)
+                    .putExtra("address", address)
                 )
+                finish()
 
             } else {
                 Toast.makeText(applicationContext, "Lengkapi data", Toast.LENGTH_SHORT).show()

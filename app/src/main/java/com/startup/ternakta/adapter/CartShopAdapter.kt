@@ -11,19 +11,19 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.startup.ternakta.R
-import com.startup.ternakta.model.ArticleModel
-import com.startup.ternakta.model.CartProductModel
-import com.startup.ternakta.model.CartShopModel
-import com.startup.ternakta.model.ProductModel
+import com.startup.ternakta.network.Model
+import com.startup.ternakta.utils.Constant
 import de.hdodenhof.circleimageview.CircleImageView
 
 
 class CartShopAdapter(
-    private val list: List<CartShopModel>) :
+    private val listProduct: List<Model.DataModel>,
+    private val list: List<Model.DataModel>
+) :
     RecyclerView.Adapter<CartShopAdapter.ListViewHolder>() {
 
     inner class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        var cartProduct = ArrayList<CartProductModel>()
+        private var cartProduct = ArrayList<Model.DataModel>()
 
         private val imgShop: CircleImageView by lazy { itemView.findViewById(R.id.imgShopCart) }
         private val imgUp: ImageView by lazy { itemView.findViewById(R.id.imgUp) }
@@ -32,29 +32,86 @@ class CartShopAdapter(
         private val rvCartChild: RecyclerView by lazy { itemView.findViewById(R.id.rvCartChild) }
         private val item: CardView by lazy { itemView.findViewById(R.id.itemCardCartShop) }
 
-        fun bindData(list: CartShopModel) {
+        fun bindData(list: Model.DataModel) {
 
-            val countProduct = list.productCount.toInt()
-            for (i in 1..countProduct) {
-                val image =
-                    "https://img.freepik.com/free-vector/online-shopping-isometric-landing-page-template-web-banner-purple-background_88138-451.jpg?w=740&t=st=1656926462~exp=1656927062~hmac=0e41c487cb0c62b6fe4479722706501c8426997ae931801fd1d29d6ae244a6bf"
+            for (i in listProduct) {
 
-                cartProduct.add(CartProductModel("nama produk","1","20000",image))
+                if (list.user_store_id == i.user_store_id) {
+
+                    if (i.price_promo != null) {
+                        cartProduct.add(
+                            Model.DataModel(
+                                "",
+                                "",
+                                i.name,
+                                i.image,
+                                "",
+                                "",
+                                "",
+                                "",
+                                "",
+                                "",
+                                "",
+                                i.product_id,
+                                "",
+                                "",
+                                "",
+                                i.price,
+                                i.price_promo,
+                                "",
+                                "",
+                                "",
+                                "",
+                                ""
+                            )
+                        )
+
+                    } else {
+                        cartProduct.add(
+                            Model.DataModel(
+                                "",
+                                "",
+                                i.name,
+                                i.image,
+                                "",
+                                "",
+                                "",
+                                "",
+                                "",
+                                "",
+                                "",
+                                i.product_id,
+                                "",
+                                "",
+                                "",
+                                i.price,
+                                "",
+                                "",
+                                "",
+                                "",
+                                "",
+                                ""
+                            )
+                        )
+                    }
+
+                }
             }
 
             val adapter = CartProductAdapter(cartProduct)
             rvCartChild.layoutManager = LinearLayoutManager(itemView.context)
             rvCartChild.adapter = adapter
 
-            imgShop.load(list.image)
+            val urlShopCart = Constant.IMAGE_URL_STORE + list.store_image
+            imgShop.load(urlShopCart)
 
-            nameShop.text = list.name
+            nameShop.text = list.store_name
 
             item.setOnClickListener {
                 Toast.makeText(itemView.context, list.name, Toast.LENGTH_SHORT).show()
             }
 
-            if (imgDown.visibility == View.VISIBLE){
+            if (imgDown.visibility == View.VISIBLE) {
                 imgDown.visibility = View.VISIBLE
                 imgUp.visibility = View.GONE
             } else {
@@ -75,6 +132,7 @@ class CartShopAdapter(
             }
 
         }
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {

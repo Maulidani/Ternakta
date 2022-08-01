@@ -12,13 +12,14 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.startup.ternakta.R
-import com.startup.ternakta.model.ProductModel
+import com.startup.ternakta.network.Model
 import com.startup.ternakta.ui.ProductDetailActivity
+import com.startup.ternakta.utils.Constant
 
 
 class ProductAdapter(
     private val type: String,
-    private val list: List<ProductModel>
+    private val list: ArrayList<Model.DataModel>
 ) :
     RecyclerView.Adapter<ProductAdapter.ListViewHolder>() {
 
@@ -31,20 +32,40 @@ class ProductAdapter(
         private val priceProduct: TextView by lazy { itemView.findViewById(R.id.tvProductPrice) }
         private val item: CardView by lazy { itemView.findViewById(R.id.itemCardProduct) }
 
-        fun bindData(list: ProductModel) {
+        fun bindData(list: Model.DataModel) {
 
-            imgProduct.load(list.image)
+            val urlProduct = "${Constant.IMAGE_URL_PRODUCT}${list.image}"
+            imgProduct.load(urlProduct)
 
             nameProduct.text = list.name
             priceProduct.text = list.price
 
             item.setOnClickListener {
-                Toast.makeText(itemView.context, list.name, Toast.LENGTH_SHORT).show()
-                ContextCompat.startActivity(
-                    itemView.context,
-                    Intent(itemView.context, ProductDetailActivity::class.java),
-                    null
-                )
+                if (list.price_promo != null) {
+
+                    ContextCompat.startActivity(
+                        itemView.context,
+                        Intent(itemView.context, ProductDetailActivity::class.java)
+                            .putExtra("name",list.name)
+                            .putExtra("image",list.image)
+                            .putExtra("price",list.price)
+                            .putExtra("price_promo",list.price_promo)
+                            .putExtra("description",list.description)
+                        , null
+                    )
+                } else {
+
+                    ContextCompat.startActivity(
+                        itemView.context,
+                        Intent(itemView.context, ProductDetailActivity::class.java)
+                            .putExtra("name",list.name)
+                            .putExtra("image",list.image)
+                            .putExtra("price",list.price)
+                            .putExtra("price_promo","")
+                            .putExtra("description",list.description)
+                        , null
+                    )
+                }
             }
         }
     }
