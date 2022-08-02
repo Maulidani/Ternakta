@@ -106,6 +106,7 @@ class CartController
                     );
             
             $unique = $cart->unique('user_store_id')->values();
+            $unique2 = $cart->unique('product_id')->values();
 
             if ($cart->isEmpty()) {
                 return response()->json([
@@ -119,7 +120,7 @@ class CartController
                     'message' => 'Success',
                     'errors' => false,
                     'data' => $unique,
-                    'product' => $cart,
+                    'product' => $unique2,
                 ]);
             }
 

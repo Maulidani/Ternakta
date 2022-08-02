@@ -19,7 +19,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class ProductListActivity : AppCompatActivity() {
-    private val TAG = "Home"
+    private val TAG = "ProductList"
     private val userType = "customer"
 
     var productAll = ArrayList<Model.DataModel>()

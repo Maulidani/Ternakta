@@ -8,11 +8,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import coil.load
 import com.startup.ternakta.R
 import com.startup.ternakta.network.ApiClient
 import com.startup.ternakta.network.Model
+import com.startup.ternakta.ui.LoginActivity
 import com.startup.ternakta.ui.OrderHistoryActivity
 import com.startup.ternakta.ui.customer.Registration2CustomerActivity
 import com.startup.ternakta.ui.customer.RegistrationCustomerActivity
@@ -34,6 +36,8 @@ class ProfileFragment : Fragment() {
     private lateinit var imgMore: ImageView
     private lateinit var tvOrder: TextView
     private lateinit var tvAddress: TextView
+    private lateinit var tvCallCenter: TextView
+    private lateinit var tvLogout: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -59,19 +63,28 @@ class ProfileFragment : Fragment() {
             imgMore = requireView().findViewById(R.id.imgMore)
             tvOrder = requireView().findViewById(R.id.tvHistoryOrder)
             tvAddress = requireView().findViewById(R.id.tvAddress)
+            tvCallCenter = requireView().findViewById(R.id.tvOtherCS)
+            tvLogout = requireView().findViewById(R.id.tvOtherLogout)
 
             imgMore.setOnClickListener {
                 getUserInfo("imgMore")
             }
-
             tvOrder.setOnClickListener {
                 getUserInfo("orderHistory")
-
             }
             tvAddress.setOnClickListener {
-
                 getUserInfo("address")
-
+            }
+            tvCallCenter.setOnClickListener {
+                //
+            }
+            tvLogout.setOnClickListener {
+                sharedPref.logout()
+                Toast.makeText(requireContext(), "Keluar", Toast.LENGTH_SHORT).show()
+                activity?.finish()
+                startActivity(
+                    Intent(requireContext(), LoginActivity::class.java)
+                )
             }
         }
     }
@@ -109,33 +122,44 @@ class ProfileFragment : Fragment() {
 
                             when (action) {
                                 "imgMore" -> {
-                                    startActivity(Intent(requireContext(), Registration2CustomerActivity::class.java)
-                                        .putExtra("action","edit")
-                                        .putExtra("type","customer")
-                                        .putExtra("id",userId)
-                                        .putExtra("name",user?.name)
-                                        .putExtra("phone",user?.phone)
-                                        .putExtra("password",user?.password)
-                                        .putExtra("image",user?.image)
+                                    startActivity(
+                                        Intent(
+                                            requireContext(),
+                                            Registration2CustomerActivity::class.java
+                                        )
+                                            .putExtra("action", "edit")
+                                            .putExtra("type", "customer")
+                                            .putExtra("id", userId)
+                                            .putExtra("name", user?.name)
+                                            .putExtra("phone", user?.phone)
+                                            .putExtra("password", user?.password)
+                                            .putExtra("image", user?.image)
                                     )
                                 }
                                 "address" -> {
-                                    startActivity(Intent(requireContext(), RegistrationCustomerActivity::class.java)
-                                        .putExtra("action","edit")
-                                        .putExtra("type","customer")
-                                        .putExtra("id",userId)
-                                        .putExtra("name",user?.name)
-                                        .putExtra("phone",user?.phone)
-                                        .putExtra("password",user?.password)
-                                        .putExtra("province",user?.province)
-                                        .putExtra("city",user?.city)
-                                        .putExtra("districts",user?.districts)
-                                        .putExtra("address",user?.address)
+                                    startActivity(
+                                        Intent(
+                                            requireContext(),
+                                            RegistrationCustomerActivity::class.java
+                                        )
+                                            .putExtra("action", "edit")
+                                            .putExtra("type", "customer")
+                                            .putExtra("id", userId)
+                                            .putExtra("name", user?.name)
+                                            .putExtra("phone", user?.phone)
+                                            .putExtra("password", user?.password)
+                                            .putExtra("province", user?.province)
+                                            .putExtra("city", user?.city)
+                                            .putExtra("districts", user?.districts)
+                                            .putExtra("address", user?.address)
                                     )
                                 }
                                 "orderHistory" -> {
-                                    getUserInfo("orderHistory")
-
+                                    startActivity(
+                                        Intent(
+                                            requireContext(), OrderHistoryActivity::class.java
+                                        )
+                                    )
                                 }
                                 else -> {
 

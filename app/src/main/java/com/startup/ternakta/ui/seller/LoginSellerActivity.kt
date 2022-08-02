@@ -111,17 +111,17 @@ class LoginSellerActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-//        if (sharedPref.getBoolean(PreferencesHelper.PREF_IS_LOGIN)) {
-//            if (sharedPref.getString(PreferencesHelper.PREF_USER_TYPE) == "customer") {
-//                startActivity(Intent(applicationContext, MainSellerActivity::class.java))
-//                finish()
-//
-//            } else {
-//                //
-//            }
-//
-//        } else {
-//            //
-//        }
+        if (sharedPref.getBoolean(PreferencesHelper.PREF_IS_LOGIN)) {
+            if (sharedPref.getString(PreferencesHelper.PREF_USER_TYPE) == "customer") {
+                startActivity(Intent(applicationContext, MainSellerActivity::class.java))
+                finish()
+
+            } else {
+                //
+            }
+
+        } else {
+            //
+        }
     }
 }

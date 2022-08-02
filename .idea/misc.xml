@@ -23,6 +23,7 @@
         <entry key="app/src/main/res/layout/activity_main_admin.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_main_customer.xml" value="0.17119565217391305" />
         <entry key="app/src/main/res/layout/activity_main_seller.xml" value="0.2" />
+        <entry key="app/src/main/res/layout/activity_order_detail.xml" value="0.13020833333333334" />
         <entry key="app/src/main/res/layout/activity_order_history.xml" value="0.19583333333333333" />
         <entry key="app/src/main/res/layout/activity_product.xml" value="0.19583333333333333" />
         <entry key="app/src/main/res/layout/activity_product_detail.xml" value="0.25" />
@@ -41,7 +42,7 @@
         <entry key="app/src/main/res/layout/item_article.xml" value="0.3927893738140417" />
         <entry key="app/src/main/res/layout/item_cart.xml" value="0.22" />
         <entry key="app/src/main/res/layout/item_cart_child.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/item_order.xml" value="0.16145833333333334" />
+        <entry key="app/src/main/res/layout/item_order.xml" value="0.2" />
         <entry key="app/src/main/res/layout/item_product.xml" value="0.33" />
         <entry key="app/src/main/res/layout/item_slider_banner.xml" value="0.19479166666666667" />
         <entry key="app/src/main/res/menu/navigation_menu.xml" value="0.1" />

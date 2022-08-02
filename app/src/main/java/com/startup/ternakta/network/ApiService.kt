@@ -202,13 +202,22 @@ interface ApiService {
         @Field("user_store_id") userStoreId: String,  // ( ''/empty , not empty )
     ): Call<Model.ResponseModel> // response : data{[]}, product{[]}
 
-    @Multipart
+//    @FormUrlEncoded
+//    @POST("add-order")
+//    fun addOrder(
+//        @Field("user_customer_id") name: String,
+//        @Field("user_store_id") userStoreId: String,
+//        @Field("status") status: String,
+//        @Field("product_id") productId: ArrayList<String>, // [product id]
+//    ): Call<Model.ResponseModel> // response : order{}, order_item{[]}
+
+  @Multipart
     @POST("add-order")
     fun addOrder(
         @Part("user_customer_id") name: RequestBody,
-        @Part("user_store_id") category: RequestBody,
-        @Part("status") quantity: RequestBody,
-        @Part("product_id") productId: ArrayList<RequestBody>, // [product id]
+        @Part("user_store_id") userStoreId: RequestBody,
+        @Part("status") status: RequestBody,
+        @Part("product_id[]") productId: ArrayList<RequestBody>, // [product id]
     ): Call<Model.ResponseModel> // response : order{}, order_item{[]}
 
     @Multipart

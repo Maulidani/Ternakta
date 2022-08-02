@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
@@ -33,6 +34,7 @@ class HomeFragment : Fragment() {
     lateinit var rvProductPromo: RecyclerView
     lateinit var rvProductNew: RecyclerView
     lateinit var appBar :ConstraintLayout
+    lateinit var tvShowAllNewAdded :TextView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -68,9 +70,16 @@ class HomeFragment : Fragment() {
 
         if (isAdded) {
             appBar = requireView().findViewById(R.id.appBar)
+            tvShowAllNewAdded = requireView().findViewById(R.id.tvShowAllNewAdded)
+
             appBar.setOnClickListener {
                 startActivity(Intent(requireContext(), ProductListActivity::class.java))
             }
+            tvShowAllNewAdded.setOnClickListener {
+                startActivity(Intent(requireContext(), ProductListActivity::class.java))
+            }
+
+
         }
 
     }
@@ -160,7 +169,7 @@ class HomeFragment : Fragment() {
                             }
 
                             if (dataPromo.isNotEmpty()) {
-                                val adapterPromo = ProductAdapter("home", dataPromo)
+                                val adapterPromo = ProductAdapter("home_promo", dataPromo)
                                 rvProductPromo.layoutManager =
                                     GridLayoutManager(requireActivity(), 2)
                                 rvProductPromo.adapter = adapterPromo

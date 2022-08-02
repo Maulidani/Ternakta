@@ -39,6 +39,11 @@ class ProductAdapter(
 
             nameProduct.text = list.name
             priceProduct.text = list.price
+            if (list.price_promo != null) {
+                priceProduct.text = list.price_promo
+            } else {
+                priceProduct.text = list.price
+            }
 
             item.setOnClickListener {
                 if (list.price_promo != null) {
@@ -46,6 +51,8 @@ class ProductAdapter(
                     ContextCompat.startActivity(
                         itemView.context,
                         Intent(itemView.context, ProductDetailActivity::class.java)
+                            .putExtra("id",list.id)
+                            .putExtra("store_id",list.user_store_id)
                             .putExtra("name",list.name)
                             .putExtra("image",list.image)
                             .putExtra("price",list.price)
@@ -58,6 +65,8 @@ class ProductAdapter(
                     ContextCompat.startActivity(
                         itemView.context,
                         Intent(itemView.context, ProductDetailActivity::class.java)
+                            .putExtra("id",list.id)
+                            .putExtra("store_id",list.user_store_id)
                             .putExtra("name",list.name)
                             .putExtra("image",list.image)
                             .putExtra("price",list.price)
