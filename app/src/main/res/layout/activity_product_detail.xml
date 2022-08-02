@@ -103,7 +103,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="150dp"
             android:layout_height="match_parent"
-            android:id="@+id/parentCart"
+            android:id="@+id/AddCart"
             android:background="@color/light_gray"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent">
@@ -134,8 +134,9 @@
             android:layout_width="0dp"
             app:layout_constraintRight_toRightOf="parent"
             android:background="@color/yellow"
+            android:id="@+id/OrderNow"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toRightOf="@+id/parentCart"
+            app:layout_constraintLeft_toRightOf="@+id/AddCart"
             android:layout_height="match_parent">
             <androidx.appcompat.widget.AppCompatTextView
                 android:layout_width="match_parent"

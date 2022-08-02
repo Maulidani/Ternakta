@@ -4,17 +4,21 @@ import android.app.Activity
 import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
+import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import coil.load
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import com.startup.ternakta.R
 import com.startup.ternakta.network.ApiClient
 import com.startup.ternakta.network.Model
+import com.startup.ternakta.utils.Constant
 import com.startup.ternakta.utils.Constant.setShowProgress
+import com.startup.ternakta.utils.PreferencesHelper
 import de.hdodenhof.circleimageview.CircleImageView
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -28,8 +32,10 @@ import java.io.File
 
 class Registration2CustomerActivity : AppCompatActivity() {
     private val TAG = "Registration2Customer"
-    private val userType = "customer"
+    var userType = ""
+    private lateinit var sharedPref: PreferencesHelper
 
+    private val imgBack: ImageView by lazy { findViewById(R.id.imgBack) }
     private val btnAdd: MaterialButton by lazy { findViewById(R.id.btnAdd) }
     private val inputName: TextInputEditText by lazy { findViewById(R.id.inputName) }
     private val inputPhone: TextInputEditText by lazy { findViewById(R.id.inputPhone) }
@@ -38,25 +44,60 @@ class Registration2CustomerActivity : AppCompatActivity() {
 
     private var reqBody: RequestBody? = null
     private var partImage: MultipartBody.Part? = null
+    private var imgNewSource = false
 
     private var intentProvince = ""
     private var intentCity = ""
     private var intentDistricts = ""
     private var intentAddress = ""
+    private var intentImage = ""
+
+    private var intentAction = ""
+    private var intentType = ""
+    private var intentId = ""
+    private var intentName = ""
+    private var intentPhone = ""
+    private var intentPassword = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registration2_customer)
 
+        sharedPref = PreferencesHelper(applicationContext)
+        userType = sharedPref.getString(PreferencesHelper.PREF_USER_TYPE).toString()
+
+        intentAction = intent.getStringExtra("action").toString()
+        intentType = intent.getStringExtra("type").toString()
+        intentId = intent.getStringExtra("id").toString()
+        intentName = intent.getStringExtra("name").toString()
+        intentPhone = intent.getStringExtra("phone").toString()
+        intentPassword = intent.getStringExtra("password").toString()
+
         intentProvince = intent.getStringExtra("province").toString()
         intentCity = intent.getStringExtra("city").toString()
         intentDistricts = intent.getStringExtra("districts").toString()
         intentAddress = intent.getStringExtra("address").toString()
+        intentImage = intent.getStringExtra("image").toString()
+
+        if (intentAction == "edit") {
+            btnAdd.text = "Edit akun"
+            inputName.setText(intentName)
+            inputPhone.setText(intentPhone)
+            inputPassword.setText(intentPassword)
+            if (intentType == "customer") {
+                imgProfile.load(Constant.IMAGE_URL_CUSTOMER + intentImage)
+            } else if (intentType == "store") {
+                imgProfile.load(Constant.IMAGE_URL_STORE + intentImage)
+            }
+        }
 
         onClick()
     }
 
     private fun onClick() {
+
+        imgBack.setOnClickListener { finish() }
+
         imgProfile.setOnClickListener {
             ImagePicker.with(this)
                 .cropSquare()
@@ -90,20 +131,43 @@ class Registration2CustomerActivity : AppCompatActivity() {
                     )
                         .show()
                 } else {
-                    if (partImage != null) {
+                    if (intentAction == "edit") {
 
-                        registerUser(
-                            intentProvince,
-                            intentCity,
-                            intentDistricts,
-                            intentAddress,
-                            name,
-                            phone,
-                            password,
-                        )
+                        if (intentName == inputName.text.toString() &&
+                            intentPhone == inputPhone.text.toString() &&
+                            intentPassword == inputPassword.text.toString() &&
+                            !imgNewSource
+                        ) {
+                            Toast.makeText(
+                                applicationContext,
+                                "Tidak ada data yang berubah",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        } else {
+                            getUserInfo()
+                        }
+
                     } else {
-                        Toast.makeText(applicationContext, "Lengkapi data foto", Toast.LENGTH_SHORT)
-                            .show()
+
+                        if (partImage != null) {
+                            registerUser(
+                                intentProvince,
+                                intentCity,
+                                intentDistricts,
+                                intentAddress,
+                                name,
+                                phone,
+                                password,
+                            )
+
+                        } else {
+                            Toast.makeText(
+                                applicationContext,
+                                "Lengkapi data foto",
+                                Toast.LENGTH_SHORT
+                            )
+                                .show()
+                        }
                     }
                 }
 
@@ -111,6 +175,209 @@ class Registration2CustomerActivity : AppCompatActivity() {
                 Toast.makeText(applicationContext, "Lengkapi data", Toast.LENGTH_SHORT).show()
             }
         }
+
+    }
+
+    private fun getUserInfo() {
+
+        val phone = sharedPref.getString(PreferencesHelper.PREF_USER_PHONE).toString()
+        val password = sharedPref.getString(PreferencesHelper.PREF_USER_PASSWORD).toString()
+
+        ApiClient.instances.loginUser(intentType, phone, password, "")
+            .enqueue(object : Callback<Model.ResponseModel> {
+                override fun onResponse(
+                    call: Call<Model.ResponseModel>,
+                    response: Response<Model.ResponseModel>
+                ) {
+                    val responseBody = response.body()
+                    val message = responseBody?.message
+                    val user = responseBody?.user
+
+                    if (response.isSuccessful && message == "Success") {
+                        Log.e(TAG, "onResponse: $responseBody")
+
+                        if (user != null) {
+
+                            if (imgNewSource) {
+                                editUser(
+                                    user.id,
+                                    user.province,
+                                    user.city,
+                                    user.districts,
+                                    user.address,
+                                    inputName.text.toString(),
+                                    inputPhone.text.toString(),
+                                    inputPassword.text.toString(),
+                                    partImage!!
+                                )
+                            } else {
+                                editUserWithoutImage(
+                                    user.id,
+                                    user.province,
+                                    user.city,
+                                    user.districts,
+                                    user.address,
+                                    inputName.text.toString(),
+                                    inputPhone.text.toString(),
+                                    inputPassword.text.toString()
+                                )
+                            }
+                        }
+
+                    } else {
+                        Log.e(TAG, "onResponse: $response")
+
+                    }
+
+                }
+
+                override fun onFailure(call: Call<Model.ResponseModel>, t: Throwable) {
+                    Log.e(TAG, "onResponse: ${t.message}")
+
+                }
+
+            })
+
+    }
+
+    private fun editUser(
+        userId: String,
+        province: String,
+        city: String,
+        districts: String,
+        address: String,
+        name: String,
+        phone: String,
+        password: String,
+        partImage: MultipartBody.Part
+    ) {
+        val partId: RequestBody = userId.toRequestBody("text/plain".toMediaTypeOrNull())
+        val partProvince: RequestBody = province.toRequestBody("text/plain".toMediaTypeOrNull())
+        val partCity: RequestBody = city.toRequestBody("text/plain".toMediaTypeOrNull())
+        val partDistricts: RequestBody = districts.toRequestBody("text/plain".toMediaTypeOrNull())
+        val partAddress: RequestBody = address.toRequestBody("text/plain".toMediaTypeOrNull())
+        val partName: RequestBody = name.toRequestBody("text/plain".toMediaTypeOrNull())
+        val partPhone: RequestBody = phone.toRequestBody("text/plain".toMediaTypeOrNull())
+        val partPassword: RequestBody = password.toRequestBody("text/plain".toMediaTypeOrNull())
+        val partType: RequestBody = userType.toRequestBody("text/plain".toMediaTypeOrNull())
+
+        ApiClient.instances.editUser(
+            partId,
+            partType,
+            partName,
+            partImage,
+            partPhone,
+            partPassword,
+            partProvince,
+            partCity,
+            partDistricts,
+            partAddress,
+        ).enqueue(object : Callback<Model.ResponseModel> {
+            override fun onResponse(
+                call: Call<Model.ResponseModel>,
+                response: Response<Model.ResponseModel>
+            ) {
+                val responseBody = response.body()
+                val message = responseBody?.message
+                val user = responseBody?.user
+
+                if (response.isSuccessful && message == "Success") {
+                    Log.e(TAG, "onResponse: $responseBody")
+                    Toast.makeText(
+                        applicationContext,
+                        "Berhasil edit akun",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                    if (user != null) {
+
+                        sharedPref.put(PreferencesHelper.PREF_USER_PHONE, user.phone)
+                        sharedPref.put(PreferencesHelper.PREF_USER_PASSWORD, user.password)
+
+                        finish()
+                    }
+
+                } else {
+                    Log.e(TAG, "onResponse: $response")
+                    Toast.makeText(applicationContext, "Gagal", Toast.LENGTH_SHORT).show()
+
+                }
+                btnAdd.setShowProgress(false)
+
+            }
+
+            override fun onFailure(call: Call<Model.ResponseModel>, t: Throwable) {
+
+                Toast.makeText(applicationContext, t.message.toString(), Toast.LENGTH_SHORT)
+                    .show()
+                btnAdd.setShowProgress(false)
+            }
+
+        })
+
+    }
+
+    private fun editUserWithoutImage(
+        userId: String,
+        province: String,
+        city: String,
+        districts: String,
+        address: String,
+        name: String,
+        phone: String,
+        password: String,
+    ) {
+        ApiClient.instances.editWithoutImgUser(
+            userId,
+            userType,
+            name,
+            phone,
+            password,
+            province,
+            city,
+            districts,
+            address,
+        ).enqueue(object : Callback<Model.ResponseModel> {
+            override fun onResponse(
+                call: Call<Model.ResponseModel>,
+                response: Response<Model.ResponseModel>
+            ) {
+                val responseBody = response.body()
+                val message = responseBody?.message
+                val user = responseBody?.user
+
+                if (response.isSuccessful && message == "Success") {
+                    Log.e(TAG, "onResponse: $responseBody")
+                    Toast.makeText(
+                        applicationContext,
+                        "Berhasil edit akun",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                    if (user != null) {
+                        sharedPref.put(PreferencesHelper.PREF_USER_PHONE, user.phone)
+                        sharedPref.put(PreferencesHelper.PREF_USER_PASSWORD, user.password)
+
+                        finish()
+                    }
+
+                } else {
+                    Log.e(TAG, "onResponse: $response")
+                    Toast.makeText(applicationContext, "Gagal", Toast.LENGTH_SHORT).show()
+
+                }
+                btnAdd.setShowProgress(false)
+
+            }
+
+            override fun onFailure(call: Call<Model.ResponseModel>, t: Throwable) {
+
+                Toast.makeText(applicationContext, t.message.toString(), Toast.LENGTH_SHORT)
+                    .show()
+                btnAdd.setShowProgress(false)
+            }
+
+        })
 
     }
 
@@ -205,6 +472,7 @@ class Registration2CustomerActivity : AppCompatActivity() {
 
                 reqBody = image.asRequestBody("image/*".toMediaTypeOrNull())
                 partImage = MultipartBody.Part.createFormData("image", image.name, reqBody!!)
+                imgNewSource = true
 
             } else if (resultCode == ImagePicker.RESULT_ERROR) {
                 Toast.makeText(applicationContext, ImagePicker.getError(data), Toast.LENGTH_SHORT)

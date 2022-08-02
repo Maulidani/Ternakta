@@ -1,11 +1,13 @@
 package com.startup.ternakta.ui.customer.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -18,6 +20,7 @@ import com.startup.ternakta.adapter.SliderBannerAdapter
 import com.startup.ternakta.model.SliderItem
 import com.startup.ternakta.network.ApiClient
 import com.startup.ternakta.network.Model
+import com.startup.ternakta.ui.ProductListActivity
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -29,6 +32,7 @@ class HomeFragment : Fragment() {
     var sliderItem = ArrayList<SliderItem>()
     lateinit var rvProductPromo: RecyclerView
     lateinit var rvProductNew: RecyclerView
+    lateinit var appBar :ConstraintLayout
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,10 +45,34 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        onClick()
+
         //dataStatic()
         getBanner()
         getProductPromo()
         getProduct()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        onClick()
+
+        //dataStatic()
+        getBanner()
+        getProductPromo()
+        getProduct()
+    }
+
+    private fun onClick(){
+
+        if (isAdded) {
+            appBar = requireView().findViewById(R.id.appBar)
+            appBar.setOnClickListener {
+                startActivity(Intent(requireContext(), ProductListActivity::class.java))
+            }
+        }
+
     }
 
     private fun getBanner() {

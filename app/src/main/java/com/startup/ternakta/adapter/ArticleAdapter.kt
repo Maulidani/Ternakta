@@ -1,5 +1,6 @@
 package com.startup.ternakta.adapter
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,10 +8,13 @@ import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import coil.load
 import com.startup.ternakta.R
 import com.startup.ternakta.network.Model
+import com.startup.ternakta.ui.ArticleDetailActivity
+import com.startup.ternakta.ui.ProductDetailActivity
 import com.startup.ternakta.utils.Constant
 import de.hdodenhof.circleimageview.CircleImageView
 
@@ -37,8 +41,15 @@ class ArticleAdapter(
             descArticle.text = list.description
 
             item.setOnClickListener {
-                Toast.makeText(itemView.context, list.title, Toast.LENGTH_SHORT).show()
-            }
+
+                ContextCompat.startActivity(
+                    itemView.context,
+                    Intent(itemView.context, ArticleDetailActivity::class.java)
+                        .putExtra("title",list.title)
+                        .putExtra("image",list.image)
+                        .putExtra("description",list.description)
+                    , null
+                )            }
         }
     }
 

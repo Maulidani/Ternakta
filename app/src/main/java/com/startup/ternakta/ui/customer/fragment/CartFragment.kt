@@ -6,14 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.startup.ternakta.R
 import com.startup.ternakta.adapter.CartShopAdapter
-import com.startup.ternakta.adapter.ProductAdapter
 import com.startup.ternakta.network.ApiClient
 import com.startup.ternakta.network.Model
 import com.startup.ternakta.utils.PreferencesHelper
@@ -26,6 +24,7 @@ class CartFragment : Fragment() {
     private val userType = "customer"
     private lateinit var sharedPref: PreferencesHelper
     private lateinit var tvMyAddress: TextView
+    lateinit var swipeRefresh: SwipeRefreshLayout
 
     lateinit var rvCart: RecyclerView
 
@@ -40,15 +39,37 @@ class CartFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (isAdded) { sharedPref = PreferencesHelper(requireContext()) }
+        if (isAdded) {
+            sharedPref = PreferencesHelper(requireContext())
+            swipeRefresh = requireView().findViewById(R.id.swipeRefreshCart)
 
-       //dataStatic()
+            swipeRefresh.isRefreshing = true
+
+            swipeRefresh.setOnRefreshListener {
+                getCart()
+            }
+
+            //dataStatic()
+            getUserInfo()
+            getCart()
+
+
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        //dataStatic()
         getUserInfo()
         getCart()
     }
 
-    private fun getCart(){
+
+    private fun getCart() {
         if (isAdded) {
+            swipeRefresh.isRefreshing = true
+
             rvCart = requireView().findViewById(R.id.rvCart)
 
             val userId = sharedPref.getString(PreferencesHelper.PREF_USER_ID).toString()
@@ -67,23 +88,29 @@ class CartFragment : Fragment() {
                         if (response.isSuccessful && message == "Success" && isAdded) {
                             Log.e(TAG, "onResponse: $responseBody")
 
-                            val adapter = dataProduct?.let { data?.let { it1 ->
-                                CartShopAdapter(it,
-                                    it1
-                                )
-                            } }
-                            rvCart.layoutManager = LinearLayoutManager(requireActivity().applicationContext)
+                            val adapter = dataProduct?.let {
+                                data?.let { it1 ->
+                                    CartShopAdapter(
+                                        it,
+                                        it1
+                                    )
+                                }
+                            }
+                            rvCart.layoutManager =
+                                LinearLayoutManager(requireActivity().applicationContext)
                             rvCart.adapter = adapter
 
                         } else {
                             Log.e(TAG, "onResponse: $response")
 
                         }
+                        swipeRefresh.isRefreshing = false
 
                     }
 
                     override fun onFailure(call: Call<Model.ResponseModel>, t: Throwable) {
                         Log.e(TAG, "onResponse: ${t.message}")
+                        swipeRefresh.isRefreshing = false
 
                     }
 
@@ -91,14 +118,14 @@ class CartFragment : Fragment() {
         }
     }
 
-    private fun getUserInfo(){
+    private fun getUserInfo() {
         if (isAdded) {
             tvMyAddress = requireView().findViewById(R.id.tvMyPlace)
 
             val phone = sharedPref.getString(PreferencesHelper.PREF_USER_PHONE).toString()
             val password = sharedPref.getString(PreferencesHelper.PREF_USER_PASSWORD).toString()
 
-            ApiClient.instances.loginUser(userType, phone,password,"")
+            ApiClient.instances.loginUser(userType, phone, password, "")
                 .enqueue(object : Callback<Model.ResponseModel> {
                     override fun onResponse(
                         call: Call<Model.ResponseModel>,
@@ -111,7 +138,7 @@ class CartFragment : Fragment() {
                         if (response.isSuccessful && message == "Success" && isAdded) {
                             Log.e(TAG, "onResponse: $responseBody")
 
-                          tvMyAddress.text = user?.address
+                            tvMyAddress.text = user?.address
 
                         } else {
                             Log.e(TAG, "onResponse: $response")
@@ -142,9 +169,5 @@ class CartFragment : Fragment() {
 //        cartShop.add(CartShopModel("toko 3", image3, "1"))
 //    }
 
-    override fun onResume() {
-        super.onResume()
-
-    }
 
 }

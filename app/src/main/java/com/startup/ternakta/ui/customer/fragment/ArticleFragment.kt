@@ -5,11 +5,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
 import android.widget.Toast
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.startup.ternakta.R
 import com.startup.ternakta.adapter.ArticleAdapter
 import com.startup.ternakta.adapter.ProductAdapter
@@ -25,6 +28,8 @@ class ArticleFragment : Fragment() {
 
     var articleItem = ArrayList<Model.ArticleModel>()
     lateinit var rvArticle: RecyclerView
+    lateinit var search: EditText
+    lateinit var swipeRefresh: SwipeRefreshLayout
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,21 +41,45 @@ class ArticleFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
 //        dataStatic()
 
-        getArticle()
+        onClick()
+        getArticle("")
+    }
+
+
+    private fun onClick(){
+        if (isAdded){
+            search = requireView().findViewById(R.id.searchArticle)
+            swipeRefresh = requireView().findViewById(R.id.swipeRefreshArticle)
+
+            swipeRefresh.isRefreshing = true
+
+            search.addTextChangedListener {
+                getArticle(it.toString())
+            }
+
+            swipeRefresh.setOnRefreshListener {
+                getArticle(search.text.toString())
+            }
+        }
     }
 
     override fun onResume() {
         super.onResume()
 
+        onClick()
+        getArticle("")
     }
 
-    private fun getArticle(){
+    private fun getArticle(search:String){
         if (isAdded) {
+            swipeRefresh.isRefreshing = true
+
             rvArticle = requireView().findViewById(R.id.rvArticle)
 
-            ApiClient.instances.showArticle("", "")
+            ApiClient.instances.showArticle("", search)
                 .enqueue(object : Callback<Model.ResponseModel> {
                     override fun onResponse(
                         call: Call<Model.ResponseModel>,
@@ -71,10 +100,13 @@ class ArticleFragment : Fragment() {
                             Log.e(TAG, "onResponse: $response")
 
                         }
+                        swipeRefresh.isRefreshing = false
+
                     }
 
                     override fun onFailure(call: Call<Model.ResponseModel>, t: Throwable) {
                         Log.e(TAG, "onResponse: ${t.message}")
+                        swipeRefresh.isRefreshing = false
 
                     }
 

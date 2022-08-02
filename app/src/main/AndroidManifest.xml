@@ -16,9 +16,15 @@
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup,android:usesCleartextTraffic">
         <activity
-            android:name=".ui.seller.LoginSellerActivity"
-            android:windowSoftInputMode="adjustResize"
+            android:name=".ui.OrderHistoryActivity"
             android:exported="false" />
+        <activity
+            android:name=".ui.ArticleDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.seller.LoginSellerActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ui.seller.RegistrationSellerActivity"
             android:exported="false"
@@ -46,7 +52,7 @@
             android:name=".ui.ProductDetailActivity"
             android:exported="false" />
         <activity android:name=".ui.ProductListActivity" />
-        <activity android:name=".ui.admin.MainAdminActivity"></activity>
+        <activity android:name=".ui.admin.MainAdminActivity" />
         <activity
             android:name=".ui.RegistrationActivity"
             android:windowSoftInputMode="adjustResize" />
@@ -54,7 +60,7 @@
             android:name=".ui.LoginActivity"
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
-        <activity android:name=".ui.seller.MainSellerActivity"></activity>
+        <activity android:name=".ui.seller.MainSellerActivity" />
         <activity android:name=".ui.customer.MainCustomerActivity" />
         <activity
             android:name=".ui.SplashScreenActivity"
