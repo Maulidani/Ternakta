@@ -23,7 +23,7 @@ class MainCustomerActivity : AppCompatActivity() {
             when (id.itemId) {
                 R.id.navHome -> loadFragment(HomeFragment())
                 R.id.navArticle -> loadFragment(ArticleFragment())
-                R.id.navCart -> loadFragment(CartFragment())
+//                R.id.navCart -> loadFragment(CartFragment())
                 R.id.navAccount -> loadFragment(ProfileFragment())
             }
             true
