@@ -45,7 +45,6 @@ class ProductController
                         return response()->json([
                             'message' => 'Success',
                             'errors' => false,
-                            'product' => $add_product
                         ]);
 
                     } else {

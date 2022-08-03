@@ -44,6 +44,7 @@ class ProductListActivity : AppCompatActivity() {
         swipeRefresh.isRefreshing = true
 
         onClick()
+
     }
 
     private fun onClick(){

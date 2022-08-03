@@ -56,7 +56,10 @@ class OrderDetailActivity : AppCompatActivity() {
         setContentView(R.layout.activity_order_detail)
 
         intentOrderId = intent.getStringExtra("order_id").toString()
+
         sharedPref = PreferencesHelper(applicationContext)
+        userType = sharedPref.getString(PreferencesHelper.PREF_USER_TYPE).toString()
+
         getOrder()
 
         val userType = sharedPref.getString(PreferencesHelper.PREF_USER_TYPE).toString()
@@ -71,6 +74,7 @@ class OrderDetailActivity : AppCompatActivity() {
     private fun init(data: ArrayList<Model.DataModel>?, product: ArrayList<Model.DataModel>?) {
 
         imgBack.setOnClickListener { finish() }
+
         imgTrasactionProof.setOnClickListener {
             if (userType == "customer") {
                 ImagePicker.with(this)
@@ -79,7 +83,6 @@ class OrderDetailActivity : AppCompatActivity() {
                         startForProfileImageResult.launch(intent)
                     }
             }
-
         }
 
         tvOrderId.text = intentOrderId

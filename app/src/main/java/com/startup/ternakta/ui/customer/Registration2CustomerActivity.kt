@@ -399,7 +399,7 @@ class Registration2CustomerActivity : AppCompatActivity() {
         val partName: RequestBody = name.toRequestBody("text/plain".toMediaTypeOrNull())
         val partPhone: RequestBody = phone.toRequestBody("text/plain".toMediaTypeOrNull())
         val partPassword: RequestBody = password.toRequestBody("text/plain".toMediaTypeOrNull())
-        val partType: RequestBody = userType.toRequestBody("text/plain".toMediaTypeOrNull())
+        val partType: RequestBody = "customer".toRequestBody("text/plain".toMediaTypeOrNull())
         val partNull: RequestBody = "0".toRequestBody("text/plain".toMediaTypeOrNull())
 
         ApiClient.instances.addUser(
