@@ -15,15 +15,16 @@
         <entry key="app/src/main/res/drawable/ic_place.xml" value="0.1435" />
         <entry key="app/src/main/res/drawable/ic_profile.xml" value="0.1435" />
         <entry key="app/src/main/res/drawable/state_bottom_navigation.xml" value="0.1255" />
-        <entry key="app/src/main/res/layout/activity_add_product_seller.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_add_product_seller.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_article_detail.xml" value="0.1734375" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.18" />
+        <entry key="app/src/main/res/layout/activity_login_admin.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_login_seller.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.19583333333333333" />
         <entry key="app/src/main/res/layout/activity_main_admin.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_main_customer.xml" value="0.17119565217391305" />
         <entry key="app/src/main/res/layout/activity_main_seller.xml" value="0.2" />
-        <entry key="app/src/main/res/layout/activity_order_detail.xml" value="0.13020833333333334" />
+        <entry key="app/src/main/res/layout/activity_order_detail.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_order_history.xml" value="0.19583333333333333" />
         <entry key="app/src/main/res/layout/activity_product.xml" value="0.19583333333333333" />
         <entry key="app/src/main/res/layout/activity_product_detail.xml" value="0.25" />
@@ -35,10 +36,12 @@
         <entry key="app/src/main/res/layout/activity_registration_customer.xml" value="0.22" />
         <entry key="app/src/main/res/layout/activity_registration_seller.xml" value="0.19583333333333333" />
         <entry key="app/src/main/res/layout/activity_splash_screen.xml" value="0.19583333333333333" />
+        <entry key="app/src/main/res/layout/activity_user_customer_list.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_user_store_list.xml" value="0.12" />
         <entry key="app/src/main/res/layout/fragment_article.xml" value="0.19583333333333333" />
         <entry key="app/src/main/res/layout/fragment_cart.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_home.xml" value="0.25" />
-        <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_profile.xml" value="0.1" />
         <entry key="app/src/main/res/layout/item_article.xml" value="0.3927893738140417" />
         <entry key="app/src/main/res/layout/item_cart.xml" value="0.22" />
         <entry key="app/src/main/res/layout/item_cart_child.xml" value="0.25" />

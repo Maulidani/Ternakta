@@ -12,6 +12,7 @@ object Constant {
     const val IMAGE_URL_CUSTOMER = "$BASE_URL/image/user_customer/"
     const val IMAGE_URL_PRODUCT = "$BASE_URL/image/product/"
     const val IMAGE_URL_ARTICLE = "$BASE_URL/image/article/"
+    const val IMAGE_URL_TRANSACTION = "$BASE_URL/image/transaction_proof/"
 
     fun MaterialButton.setShowProgress(showProgress: Boolean?) {
 

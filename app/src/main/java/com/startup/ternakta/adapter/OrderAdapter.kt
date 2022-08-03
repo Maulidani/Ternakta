@@ -13,21 +13,25 @@ import com.startup.ternakta.R
 import com.startup.ternakta.network.Model
 import com.startup.ternakta.ui.OrderDetailActivity
 import com.startup.ternakta.ui.ProductDetailActivity
+import com.startup.ternakta.utils.PreferencesHelper
 
 
 class OrderAdapter(
-    private val list: ArrayList<Model.DataModel>
+    private val listProduct: ArrayList<Model.DataModel>,
+    private val list: ArrayList<Model.DataModel>,
 ) :
     RecyclerView.Adapter<OrderAdapter.ListViewHolder>() {
 
     inner class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
+         private lateinit var sharedPref: PreferencesHelper
         private val id: TextView by lazy { itemView.findViewById(R.id.tvOrderId) }
         private val status: TextView by lazy { itemView.findViewById(R.id.tvStatusOrder) }
         private val item: CardView by lazy { itemView.findViewById(R.id.itemCardOrder) }
 
         fun bindData(list: Model.DataModel) {
-
+            sharedPref = PreferencesHelper(itemView.context)
+            val userType = sharedPref.getString(PreferencesHelper.PREF_USER_TYPE).toString()
 
             id.text = list.id
             if (list.status == "1") {
@@ -39,12 +43,16 @@ class OrderAdapter(
             }
 
             item.setOnClickListener {
-                ContextCompat.startActivity(
-                    itemView.context,
-                    Intent(itemView.context, OrderDetailActivity::class.java)
-                        .putExtra("id",list.id)
-                    , null
-                )
+                if (userType == "customer" || userType == "store"){
+                    ContextCompat.startActivity(
+                        itemView.context,
+                        Intent(itemView.context, OrderDetailActivity::class.java)
+                            .putExtra("order_id",list.id)
+                        , null
+                    )
+                } else {
+                    //
+                }
             }
         }
     }

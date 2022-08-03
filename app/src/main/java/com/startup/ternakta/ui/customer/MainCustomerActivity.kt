@@ -11,7 +11,6 @@ import com.startup.ternakta.ui.customer.fragment.HomeFragment
 import com.startup.ternakta.ui.customer.fragment.ProfileFragment
 
 class MainCustomerActivity : AppCompatActivity() {
-
     private val bottomNavigation: BottomNavigationView by lazy { findViewById(R.id.bottomNavigation) }
 
     override fun onCreate(savedInstanceState: Bundle?) {

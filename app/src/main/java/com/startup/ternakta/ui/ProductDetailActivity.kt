@@ -2,6 +2,7 @@ package com.startup.ternakta.ui
 
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.TextView
@@ -26,13 +27,13 @@ class ProductDetailActivity : AppCompatActivity() {
     private var userType = ""
     private lateinit var sharedPref: PreferencesHelper
 
+    private val imgBack: ImageView by lazy { findViewById(R.id.imgBack) }
     private val tvNameProduct: TextView by lazy { findViewById(R.id.tvNameProduct) }
     private val tvPriceProduct: TextView by lazy { findViewById(R.id.tvPrice) }
     private val imgProduct: ImageView by lazy { findViewById(R.id.imgProduct) }
     private val tvDesc: TextView by lazy { findViewById(R.id.tvDescription) }
-    private val imgBack: ImageView by lazy { findViewById(R.id.imgBack) }
-    private val AddCart: ConstraintLayout by lazy { findViewById(R.id.AddCart) }
-    private val OrderNow: ConstraintLayout by lazy { findViewById(R.id.OrderNow) }
+//    private val AddCart: ConstraintLayout by lazy { findViewById(R.id.AddCart) }
+    private val orderNow: ConstraintLayout by lazy { findViewById(R.id.OrderNow) }
     private val tvMines: TextView by lazy { findViewById(R.id.tvMines) }
     private val tvPlus: TextView by lazy { findViewById(R.id.tvPlus) }
     private val etCount: EditText by lazy { findViewById(R.id.etCount) }
@@ -75,7 +76,18 @@ class ProductDetailActivity : AppCompatActivity() {
         }
         tvDesc.text = intentDesc
 
-
+        val userType = sharedPref.getString(PreferencesHelper.PREF_USER_TYPE).toString()
+        if (userType == "customer"){
+            orderNow.visibility = View.VISIBLE
+            tvMines.visibility = View.VISIBLE
+            tvPlus.visibility = View.VISIBLE
+            etCount.visibility = View.VISIBLE
+        } else {
+            orderNow.visibility = View.GONE
+            tvMines.visibility = View.GONE
+            tvPlus.visibility = View.GONE
+            etCount.visibility = View.GONE
+        }
     }
 
     private fun onClick() {
@@ -93,10 +105,11 @@ class ProductDetailActivity : AppCompatActivity() {
             etCount.setText(countProduct.toString())
         }
 
-        AddCart.setOnClickListener {
-            addCart()
-        }
-        OrderNow.setOnClickListener {
+//        AddCart.setOnClickListener {
+//            addCart()
+//        }
+
+        orderNow.setOnClickListener {
             if (countProduct != null) {
                 if (countProduct <= 0) {
                     Toast.makeText(
@@ -115,6 +128,7 @@ class ProductDetailActivity : AppCompatActivity() {
                 }
             }
         }
+
     }
 
     private fun addCart() {

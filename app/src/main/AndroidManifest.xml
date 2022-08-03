@@ -16,6 +16,16 @@
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup,android:usesCleartextTraffic">
         <activity
+            android:name=".ui.admin.UserCustomerListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.admin.UserStoreListActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.admin.LoginAdminActivity"
+            android:exported="false"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
             android:name=".ui.OrderDetailActivity"
             android:exported="false" />
         <activity

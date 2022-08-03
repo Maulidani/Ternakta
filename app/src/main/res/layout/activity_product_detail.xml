@@ -137,44 +137,44 @@
         android:layout_height="60dp"
         app:layout_constraintBottom_toBottomOf="parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/AddCart"
-            android:layout_width="150dp"
-            android:layout_height="match_parent"
-            android:background="@color/light_gray"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+<!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--            android:id="@+id/AddCart"-->
+<!--            android:layout_width="150dp"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:background="@color/light_gray"-->
+<!--            app:layout_constraintLeft_toLeftOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent">-->
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/imgCart"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:layout_marginTop="4dp"
-                android:src="@drawable/ic_cart"
-                app:layout_constraintBottom_toTopOf="@+id/tvCart"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+<!--            <androidx.appcompat.widget.AppCompatImageView-->
+<!--                android:id="@+id/imgCart"-->
+<!--                android:layout_width="20dp"-->
+<!--                android:layout_height="20dp"-->
+<!--                android:layout_marginTop="4dp"-->
+<!--                android:src="@drawable/ic_cart"-->
+<!--                app:layout_constraintBottom_toTopOf="@+id/tvCart"-->
+<!--                app:layout_constraintLeft_toLeftOf="parent"-->
+<!--                app:layout_constraintRight_toRightOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent" />-->
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvCart"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Masukkan Keranjang"
-                android:textColor="@color/black"
-                android:textSize="12sp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imgCart" />
+<!--            <androidx.appcompat.widget.AppCompatTextView-->
+<!--                android:id="@+id/tvCart"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:gravity="center"-->
+<!--                android:text="Masukkan Keranjang"-->
+<!--                android:textColor="@color/black"-->
+<!--                android:textSize="12sp"-->
+<!--                app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/imgCart" />-->
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+<!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/OrderNow"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:background="@color/yellow"
-            app:layout_constraintLeft_toRightOf="@+id/AddCart"
+            app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
@@ -182,7 +182,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="Beli Sekarang"
+                android:text="Beli"
                 android:textColor="@color/white"
                 android:textStyle="bold" />
 

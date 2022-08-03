@@ -45,7 +45,8 @@ class Model {
 //        val description: String,
 //        val image: String,
 
-        //order item
+        //order
+        val image_transaction: String,
         val user_customer_id: String,
 //        val user_store_id: String,
 //        val status: String,

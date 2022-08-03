@@ -3,7 +3,183 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:paddingHorizontal="18dp"
     android:layout_height="match_parent"
     tools:context=".ui.OrderDetailActivity">
 
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/parent_head"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/imgBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/ic_arrow_left" />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="52dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:src="@drawable/logo" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+    <com.google.android.material.button.MaterialButton
+        android:layout_width="wrap_content"
+        android:text="Verifikasi"
+        android:id="@+id/btnVerifition"
+        android:textSize="12dp"
+        android:textAllCaps="false"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/parent_head"
+        app:layout_constraintBottom_toBottomOf="@+id/parent_head"
+        android:layout_height="wrap_content"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvHead"
+        android:layout_width="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:gravity="left|top"
+        android:text="Order Id : "
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/parent_head" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvOrderId"
+        android:layout_width="wrap_content"
+        app:layout_constraintLeft_toRightOf="@id/tvHead"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:text="000"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@+id/parent_head" />
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvStatusOrder"
+        android:layout_width="wrap_content"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:text="Verifikasi"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toBottomOf="@+id/parent_head" />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="match_parent"
+        android:layout_height="240dp"
+        android:background="@color/gray"
+        android:src="@drawable/ic_camera"
+        android:id="@+id/imgTrasactionProof"
+        android:scaleType="fitCenter"
+        app:layout_constraintTop_toBottomOf="@id/tvOrderId"
+        android:layout_marginTop="12dp"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvInfoTransaction"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:text="Upload bukti transaksi"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/imgTrasactionProof" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvProductName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18sp"
+        android:text="Nama produk"
+        android:textColor="@color/black"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvInfoTransaction" />
+
+ <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvRp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Rp. "
+        android:textColor="@color/black"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvProductName" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="808080 "
+        android:textColor="@color/black"
+        app:layout_constraintLeft_toRightOf="@+id/tvRp"
+        app:layout_constraintTop_toBottomOf="@+id/tvProductName" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvCountInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Jumlah : "
+        android:textColor="@color/black"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvPrice" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvCountProduct"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:textColor="@color/black"
+        app:layout_constraintLeft_toRightOf="@+id/tvCountInfo"
+        app:layout_constraintTop_toBottomOf="@+id/tvPrice" />
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvTotalPriceInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Total yang harus dibayar : "
+        android:textColor="@color/black"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvCountProduct" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvTotalPrice"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="00000"
+        android:textColor="@color/black"
+        app:layout_constraintLeft_toRightOf="@+id/tvTotalPriceInfo"
+        app:layout_constraintTop_toBottomOf="@+id/tvCountProduct" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24sp"
+        android:textSize="12sp"
+        android:text="Toko akan memproses orderan anda jika sudah melakukan transaksi"
+        android:textColor="@color/black"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvTotalPrice" />
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvPhoneStoreInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:text="Sudah melakakukan transaksi ?. hubungi toko untuk verikasi (Rekening, dll): "
+        android:textColor="@color/black"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvInfo" />
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvPhoneStore"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="085085085"
+        android:textColor="@color/black"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvPhoneStoreInfo" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -62,6 +62,7 @@ class CartShopAdapter(
                                 "",
                                 "",
                                 "",
+                                "",
                                 ""
                             )
                         )
@@ -85,6 +86,7 @@ class CartShopAdapter(
                                 "",
                                 "",
                                 i.price,
+                                "",
                                 "",
                                 "",
                                 "",

@@ -146,6 +146,34 @@ class OrderController
                 ]);
             }
 
+        }  else if($user_store_id == '' && $user_store_id == '') {
+            
+            $order = Order::join('order_items', 'orders.id', '=', 'order_items.order_id')
+                        ->join('products', 'products.id', 'order_items.product_id')
+                        ->orderBy('orders.updated_at', 'DESC')
+                        ->get(['orders.*','products.id as product_id','products.name', 
+                                'products.price', 'products.price_promo',
+                                'products.description', 'products.image']
+                  );
+
+            $unique = $order->unique('id')->values();
+
+            if ($order->isEmpty()) {
+                return response()->json([
+                    'message' => 'Failed',
+                    'errors' => true,
+                ]);
+
+            } else {
+
+                return response()->json([
+                    'message' => 'Success',
+                    'errors' => false,
+                    'data' => $unique,
+                    'product' => $order,
+                ]);
+            }
+
         } else{
 
             return response()->json([

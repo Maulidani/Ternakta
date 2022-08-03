@@ -108,11 +108,12 @@ class LoginSellerActivity : AppCompatActivity() {
         finish()
     }
 
+
     override fun onResume() {
         super.onResume()
 
         if (sharedPref.getBoolean(PreferencesHelper.PREF_IS_LOGIN)) {
-            if (sharedPref.getString(PreferencesHelper.PREF_USER_TYPE) == "customer") {
+            if (sharedPref.getString(PreferencesHelper.PREF_USER_TYPE) == "store") {
                 startActivity(Intent(applicationContext, MainSellerActivity::class.java))
                 finish()
 

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingHorizontal="18dp"
-    tools:context=".ui.LoginActivity">
+    tools:context=".ui.seller.AddProductSellerActivity">
 
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/parent_head"
@@ -55,7 +55,7 @@
             android:paddingBottom="200dp">
 
             <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/imgHospital"
+                android:id="@+id/imgProduct"
                 android:layout_width="match_parent"
                 android:layout_height="160dp"
                 android:background="@color/light_gray"
@@ -153,7 +153,7 @@
     </ScrollView>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnAddHospital"
+        android:id="@+id/btnAddProduct"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
