@@ -112,6 +112,7 @@ class OrderDetailActivity : AppCompatActivity() {
                     var itemProduct = 0
 
                     if (product != null) {
+
                         for (i in product) {
 
                             if (intentOrderId == i.id) {
@@ -269,7 +270,7 @@ class OrderDetailActivity : AppCompatActivity() {
                         Log.e(TAG, "onResponse: $responseBody")
                         Toast.makeText(
                             applicationContext,
-                            "Berhasil upload bukti transaksi, tunggu toko untuk melakakukan transaksi anda",
+                            "Berhasil upload bukti transaksi, tunggu toko untuk memverifikasi transaksi anda",
                             Toast.LENGTH_SHORT
                         ).show()
 

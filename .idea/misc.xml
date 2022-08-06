@@ -15,8 +15,10 @@
         <entry key="app/src/main/res/drawable/ic_place.xml" value="0.1435" />
         <entry key="app/src/main/res/drawable/ic_profile.xml" value="0.1435" />
         <entry key="app/src/main/res/drawable/state_bottom_navigation.xml" value="0.1255" />
+        <entry key="app/src/main/res/layout/activity_add_article.xml" value="0.17391304347826086" />
         <entry key="app/src/main/res/layout/activity_add_product_seller.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_article_detail.xml" value="0.1734375" />
+        <entry key="app/src/main/res/layout/activity_article_list.xml" value="0.17391304347826086" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.18" />
         <entry key="app/src/main/res/layout/activity_login_admin.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_login_seller.xml" value="0.25" />
@@ -48,6 +50,7 @@
         <entry key="app/src/main/res/layout/item_order.xml" value="0.2" />
         <entry key="app/src/main/res/layout/item_product.xml" value="0.33" />
         <entry key="app/src/main/res/layout/item_slider_banner.xml" value="0.19479166666666667" />
+        <entry key="app/src/main/res/layout/item_user.xml" value="0.13229166666666667" />
         <entry key="app/src/main/res/menu/navigation_menu.xml" value="0.1" />
       </map>
     </option>

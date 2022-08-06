@@ -73,7 +73,6 @@ class OrderHistoryActivity : AppCompatActivity() {
                     } else {
                         Log.e(TAG, "onResponse: $response")
                         Toast.makeText(applicationContext, "Gagal", Toast.LENGTH_SHORT).show()
-userId
                     }
 
                 }

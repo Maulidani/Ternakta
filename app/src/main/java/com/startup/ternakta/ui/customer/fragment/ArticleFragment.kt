@@ -22,7 +22,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class ArticleFragment : Fragment() {
+class ArticleFragment : Fragment(), ArticleAdapter.IUserRecycler {
     private val TAG = "Article"
     private val userType = "customer"
 
@@ -92,7 +92,7 @@ class ArticleFragment : Fragment() {
                         if (response.isSuccessful && message == "Success" && isAdded) {
                             Log.e(TAG, "onResponse: $responseBody")
 
-                            val adapter = data?.let { ArticleAdapter( it) }
+                            val adapter = data?.let { ArticleAdapter( it,this@ArticleFragment) }
                             rvArticle.layoutManager = LinearLayoutManager(requireActivity().applicationContext)
                             rvArticle.adapter = adapter
 
@@ -112,6 +112,10 @@ class ArticleFragment : Fragment() {
 
                 })
         }
+    }
+
+    override fun refreshView(onUpdate: Boolean) {
+        //
     }
 
 //    private fun dataStatic(){

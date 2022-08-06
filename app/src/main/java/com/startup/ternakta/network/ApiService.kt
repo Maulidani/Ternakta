@@ -99,9 +99,9 @@ interface ApiService {
         @Part("product_id") productId: RequestBody,
         @Part("user_store_id") userId: RequestBody,
         @Part("name") name: RequestBody,
+        @Part("description") description: RequestBody,
         @Part("price") price: RequestBody,
         @Part("price_promo") pricePromo: RequestBody,
-        @Part("description") description: RequestBody,
         @Part parts: MultipartBody.Part, // image
     ): Call<Model.ResponseModel> // response : product{}
 
@@ -111,9 +111,9 @@ interface ApiService {
         @Field("product_id") productId: String,
         @Field("user_store_id") userId: String,
         @Field("name") name: String,
+        @Field("description") description: String,
         @Field("price") price: String,
         @Field("price_promo") pricePromo: String,
-        @Field("description") description: String,
     ): Call<Model.ResponseModel> // response : product{}
 
     @FormUrlEncoded

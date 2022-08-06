@@ -2,13 +2,13 @@ package com.startup.ternakta.ui.seller
 
 import android.app.Activity
 import android.graphics.BitmapFactory
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.appcompat.app.AppCompatActivity
 import coil.load
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.android.material.button.MaterialButton
@@ -26,72 +26,60 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import retrofit2.http.*
 import java.io.File
 
-class AddProductSellerActivity : AppCompatActivity() {
-    private val TAG = "AddProductSeller"
+class AddArticleActivity : AppCompatActivity() {
+    private val TAG = "AddArticle"
     var userId = ""
     var userType = ""
     private lateinit var sharedPref: PreferencesHelper
 
     private val imgBack: ImageView by lazy { findViewById(R.id.imgBack) }
-    private val imgProduct: ImageView by lazy { findViewById(R.id.imgProduct) }
-    private val inputName: TextInputEditText by lazy { findViewById(R.id.inputName) }
-    private val inputDescription: TextInputEditText by lazy { findViewById(R.id.inputDescription) }
-    private val inputPrice: TextInputEditText by lazy { findViewById(R.id.inputPrice) }
-    private val inputPricePromo: TextInputEditText by lazy { findViewById(R.id.inputPricePromo) }
-    private val btnAdd: MaterialButton by lazy { findViewById(R.id.btnAddProduct) }
+    private val imgArticle: ImageView by lazy { findViewById(R.id.imgArticle) }
+    private val inputTitle: TextInputEditText by lazy { findViewById(R.id.inputTitle) }
+    private val inputDesc: TextInputEditText by lazy { findViewById(R.id.inputDescription) }
+    private val btnAdd: MaterialButton by lazy { findViewById(R.id.btnAddArticle) }
 
     private var reqBody: RequestBody? = null
     private var partImage: MultipartBody.Part? = null
     private var imageNewSource = false
 
     private var intentAction = ""
-    private var intentProductId = ""
+    private var intentArticleId = ""
     private var intentImage = ""
-    private var intentName = ""
+    private var intentTitle = ""
     private var intentDescription = ""
-    private var intentPrice = ""
-    private var intentPricePromo = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_add_product_seller)
-
+        setContentView(R.layout.activity_add_article)
         sharedPref = PreferencesHelper(applicationContext)
         userId = sharedPref.getString(PreferencesHelper.PREF_USER_ID).toString()
         userType = sharedPref.getString(PreferencesHelper.PREF_USER_TYPE).toString()
 
         intentAction = intent.getStringExtra("action").toString()
-        intentProductId = intent.getStringExtra("product_id").toString()
+        intentArticleId = intent.getStringExtra("article_id").toString()
         intentImage = intent.getStringExtra("image").toString()
-        intentName = intent.getStringExtra("name").toString()
+        intentTitle = intent.getStringExtra("title").toString()
         intentDescription = intent.getStringExtra("description").toString()
-        intentPrice = intent.getStringExtra("price").toString()
-        intentPricePromo = intent.getStringExtra("price_promo").toString()
 
         if (intentAction == "edit") {
 
-            imgProduct.load(Constant.IMAGE_URL_PRODUCT + intentImage)
-            inputName.setText(intentName)
-            inputDescription.setText(intentDescription)
-            inputPrice.setText(intentPrice)
-            if (intentPricePromo == "null") {
-                inputPricePromo.setText("")
-            } else {
-                inputPricePromo.setText(intentPricePromo)
-            }
-
-            btnAdd.text = "Edit produk"
+            imgArticle.load(Constant.IMAGE_URL_ARTICLE + intentImage)
+            inputTitle.setText(intentTitle)
+            inputDesc.setText(intentDescription)
+            btnAdd.text = "Edit artikel"
         }
 
         onClick()
+
     }
 
     private fun onClick() {
         imgBack.setOnClickListener { finish() }
 
-        imgProduct.setOnClickListener {
+        imgArticle.setOnClickListener {
             ImagePicker.with(this)
                 .cropSquare()
                 .compress(512)//Final image size will be less than 512 KB(Optional)
@@ -102,30 +90,24 @@ class AddProductSellerActivity : AppCompatActivity() {
 
         btnAdd.setOnClickListener {
 
-            val name = inputName.text.toString()
-            val description = inputDescription.text.toString()
-            val price = inputPrice.text.toString().toIntOrNull()
-            val pricePromo = inputPricePromo.text.toString().toIntOrNull()
+            val title = inputTitle.text.toString()
+            val description = inputDesc.text.toString()
 
             if (intentAction == "edit") {
-                if (name.isNotEmpty() && description.isNotEmpty() && price != null) {
+                if (title.isNotEmpty() && description.isNotEmpty()) {
 
                     if (imageNewSource) {
-                        editProduct(
-                            intentProductId,
-                            name,
+                        editArticle(
+                            intentArticleId,
+                            title,
                             description,
-                            price.toString(),
-                            pricePromo.toString(),
                             partImage!!
                         )
                     } else {
-                        editProductWithoutImage(
-                            intentProductId,
-                            name,
+                        editArticleWithoutImage(
+                            intentArticleId,
+                            title,
                             description,
-                            price.toString(),
-                            pricePromo.toString(),
                         )
                     }
 
@@ -140,12 +122,10 @@ class AddProductSellerActivity : AppCompatActivity() {
 
 
             } else {
-                if (name.isNotEmpty() && description.isNotEmpty() && price != null && partImage != null) {
-                    addProduct(
-                        name,
+                if (title.isNotEmpty() && description.isNotEmpty() && partImage != null) {
+                    addArticle(
+                        title,
                         description,
-                        price.toString(),
-                        pricePromo.toString(),
                         partImage!!
                     )
                 } else {
@@ -161,24 +141,18 @@ class AddProductSellerActivity : AppCompatActivity() {
         }
     }
 
-    private fun addProduct(
-        name: String,
+    private fun addArticle(
+        title: String,
         description: String,
-        price: String,
-        pricePromo: String,
         partImage: MultipartBody.Part
     ) {
         val partId: RequestBody = userId.toRequestBody("text/plain".toMediaTypeOrNull())
-        val partName: RequestBody = name.toRequestBody("text/plain".toMediaTypeOrNull())
+        val partTitle: RequestBody = title.toRequestBody("text/plain".toMediaTypeOrNull())
         val partDesc: RequestBody = description.toRequestBody("text/plain".toMediaTypeOrNull())
-        val partPrice: RequestBody = price.toRequestBody("text/plain".toMediaTypeOrNull())
-        val partPricePromo: RequestBody = pricePromo.toRequestBody("text/plain".toMediaTypeOrNull())
 
-        ApiClient.instances.addProduct(
+        ApiClient.instances.addArticle(
             partId,
-            partName,
-            partPrice,
-            partPricePromo,
+            partTitle,
             partDesc,
             partImage
         )
@@ -215,28 +189,22 @@ class AddProductSellerActivity : AppCompatActivity() {
             })
     }
 
-    private fun editProduct(
-        productId: String,
-        name: String,
+    private fun editArticle(
+        articleId: String,
+        title: String,
         description: String,
-        price: String,
-        pricePromo: String,
         partImage: MultipartBody.Part
     ) {
-        val partProductId: RequestBody = productId.toRequestBody("text/plain".toMediaTypeOrNull())
+        val partArticleId: RequestBody = articleId.toRequestBody("text/plain".toMediaTypeOrNull())
         val partId: RequestBody = userId.toRequestBody("text/plain".toMediaTypeOrNull())
-        val partName: RequestBody = name.toRequestBody("text/plain".toMediaTypeOrNull())
+        val partTitle: RequestBody = title.toRequestBody("text/plain".toMediaTypeOrNull())
         val partDesc: RequestBody = description.toRequestBody("text/plain".toMediaTypeOrNull())
-        val partPrice: RequestBody = price.toRequestBody("text/plain".toMediaTypeOrNull())
-        val partPricePromo: RequestBody = pricePromo.toRequestBody("text/plain".toMediaTypeOrNull())
 
-        ApiClient.instances.editProduct(
-            partProductId,
+        ApiClient.instances.editArticle(
+            partArticleId,
             partId,
-            partName,
+            partTitle,
             partDesc,
-            partPrice,
-            partPricePromo,
             partImage
         )
             .enqueue(object : Callback<Model.ResponseModel> {
@@ -272,20 +240,16 @@ class AddProductSellerActivity : AppCompatActivity() {
             })
     }
 
-    private fun editProductWithoutImage(
-        productId: String,
-        name: String,
+    private fun editArticleWithoutImage(
+        articleId: String,
+        title: String,
         description: String,
-        price: String,
-        pricePromo: String
     ) {
-        ApiClient.instances.editWithoutImgProduct(
-            productId,
+        ApiClient.instances.editWithoutImgArticle(
+            articleId,
             userId,
-            name,
+            title,
             description,
-            price,
-            pricePromo
         )
             .enqueue(object : Callback<Model.ResponseModel> {
                 override fun onResponse(
@@ -331,7 +295,7 @@ class AddProductSellerActivity : AppCompatActivity() {
 //                    imageView.setImageURI(fileUri)
 
                 val image: File = File(fileUri.path!!)
-                imgProduct.setImageBitmap(BitmapFactory.decodeFile(image.absolutePath))
+                imgArticle.setImageBitmap(BitmapFactory.decodeFile(image.absolutePath))
 
                 Log.e(TAG, "image format: uri = $fileUri")
                 Log.e(TAG, "image format: file path = $image")

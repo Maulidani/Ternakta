@@ -1,52 +1,51 @@
-package com.startup.ternakta.ui
+package com.startup.ternakta.ui.seller
 
 import android.content.Intent
+import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.startup.ternakta.R
+import com.startup.ternakta.adapter.ArticleAdapter
 import com.startup.ternakta.adapter.ProductAdapter
 import com.startup.ternakta.network.ApiClient
 import com.startup.ternakta.network.Model
-import com.startup.ternakta.ui.seller.AddProductSellerActivity
 import com.startup.ternakta.utils.PreferencesHelper
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class ProductListActivity : AppCompatActivity(), ProductAdapter.IUserRecycler {
-    private val TAG = "ProductList"
+class ArticleListActivity : AppCompatActivity(), ArticleAdapter.IUserRecycler {
+    private val TAG = "ArticleList"
     private val userType = ""
     private lateinit var sharedPref: PreferencesHelper
 
-    val rvProduct: RecyclerView by lazy { findViewById(R.id.rvProduct) }
+    val rvArticle: RecyclerView by lazy { findViewById(R.id.rvArticle) }
 
-    private val imgBack:ImageView by lazy { findViewById(R.id.imgBack) }
-    private val search:EditText by lazy { findViewById(R.id.searchProduct) }
-    private val swipeRefresh:SwipeRefreshLayout by lazy { findViewById(R.id.swipeRefreshProduct) }
-    private val fabAddProduct:FloatingActionButton by lazy { findViewById(R.id.fabAddProduct) }
+    private val imgBack: ImageView by lazy { findViewById(R.id.imgBack) }
+    private val search: EditText by lazy { findViewById(R.id.searchArticle) }
+    private val swipeRefresh: SwipeRefreshLayout by lazy { findViewById(R.id.swipeRefreshProduct) }
+    private val fabAddArticle: FloatingActionButton by lazy { findViewById(R.id.fabAddArticle) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_product_list)
+        setContentView(R.layout.activity_article_list)
 
         sharedPref = PreferencesHelper(applicationContext)
 
         swipeRefresh.isRefreshing = true
 
         onClick()
-
     }
-
     private fun onClick(){
         val userType = sharedPref.getString(PreferencesHelper.PREF_USER_TYPE).toString()
         val userId = sharedPref.getString(PreferencesHelper.PREF_USER_ID).toString()
@@ -54,29 +53,29 @@ class ProductListActivity : AppCompatActivity(), ProductAdapter.IUserRecycler {
         imgBack.setOnClickListener { finish() }
         search.addTextChangedListener {
             if (userType == "store") {
-                getProduct(userId,it.toString())
+                getArticle(userId,it.toString())
             } else {
-                getProduct("",it.toString())
+                getArticle("",it.toString())
             }
         }
 
         swipeRefresh.setOnRefreshListener {
             if (userType == "store") {
-                getProduct(userId,search.text.toString())
+                getArticle(userId,search.text.toString())
             } else {
-                getProduct("",search.text.toString())
+                getArticle("",search.text.toString())
             }
         }
 
-        fabAddProduct.setOnClickListener {
-            startActivity(Intent(applicationContext,AddProductSellerActivity::class.java))
+        fabAddArticle.setOnClickListener {
+            startActivity(Intent(applicationContext,AddArticleActivity::class.java))
         }
     }
 
-    private fun getProduct(userId: String,search: String) {
+    private fun getArticle(userId: String,search: String) {
         swipeRefresh.isRefreshing = true
 
-        ApiClient.instances.showProduct(userId, search)
+        ApiClient.instances.showArticle(userId, search)
             .enqueue(object : Callback<Model.ResponseModel> {
                 override fun onResponse(
                     call: Call<Model.ResponseModel>,
@@ -89,9 +88,9 @@ class ProductListActivity : AppCompatActivity(), ProductAdapter.IUserRecycler {
                     if (response.isSuccessful && message == "Success") {
                         Log.e(TAG, "onResponse: $responseBody")
 
-                        val adapterProduct = data?.let { ProductAdapter("", it, this@ProductListActivity) }
-                        rvProduct.layoutManager = GridLayoutManager(applicationContext, 2);
-                        rvProduct.adapter = adapterProduct
+                        val adapterProduct = data?.let { ArticleAdapter( it, this@ArticleListActivity) }
+                        rvArticle.layoutManager = LinearLayoutManager(applicationContext);
+                        rvArticle.adapter = adapterProduct
 
                     } else {
                         Log.e(TAG, "onResponse: $response")
@@ -116,11 +115,11 @@ class ProductListActivity : AppCompatActivity(), ProductAdapter.IUserRecycler {
         val userId = sharedPref.getString(PreferencesHelper.PREF_USER_ID).toString()
 
         if (userType == "store") {
-            fabAddProduct.visibility = View.VISIBLE
-            getProduct(userId,"")
+            fabAddArticle.visibility = View.VISIBLE
+            getArticle(userId,"")
         } else {
-            fabAddProduct.visibility = View.GONE
-            getProduct("","")
+            fabAddArticle.visibility = View.GONE
+            getArticle("","")
         }
     }
 
@@ -130,11 +129,11 @@ class ProductListActivity : AppCompatActivity(), ProductAdapter.IUserRecycler {
         val userId = sharedPref.getString(PreferencesHelper.PREF_USER_ID).toString()
 
         if (userType == "store") {
-            fabAddProduct.visibility = View.VISIBLE
-            getProduct(userId,"")
+            fabAddArticle.visibility = View.VISIBLE
+            getArticle(userId,"")
         } else {
-            fabAddProduct.visibility = View.GONE
-            getProduct("","")
+            fabAddArticle.visibility = View.GONE
+            getArticle("","")
         }
 
     }

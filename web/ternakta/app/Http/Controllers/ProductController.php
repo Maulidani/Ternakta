@@ -114,7 +114,6 @@ class ProductController
                         return response()->json([
                             'message' => 'Success',
                             'errors' => false,
-                            'product' => $edit_product
                         ]);
     
                     } else {
@@ -141,7 +140,6 @@ class ProductController
                     return response()->json([
                         'message' => 'Success',
                         'errors' => false,
-                        'user' => $edit_product
                     ]);
 
                 } else {

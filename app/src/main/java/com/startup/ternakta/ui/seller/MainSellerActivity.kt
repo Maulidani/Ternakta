@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import coil.load
@@ -31,6 +32,9 @@ class MainSellerActivity : AppCompatActivity() {
     private val tvStatusSeller: TextView by lazy { findViewById(R.id.tvStatusSeller) }
     private val cardProduct: CardView by lazy { findViewById(R.id.cardProduct) }
     private val cardOrder: CardView by lazy { findViewById(R.id.cardOrder) }
+    private val cardArticle: CardView by lazy { findViewById(R.id.cardArticle) }
+    private val tvProfile: TextView by lazy { findViewById(R.id.tvProfile) }
+    private val tvAddress: TextView by lazy { findViewById(R.id.tvAddress) }
     private val tvCallCenter: TextView by lazy { findViewById(R.id.tvOtherCS) }
     private val tvOtherLogout: TextView by lazy { findViewById(R.id.tvOtherLogout) }
 
@@ -46,7 +50,7 @@ class MainSellerActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
 
-        getUserInfo()
+        getUserInfo("")
     }
 
     private fun onClick() {
@@ -56,17 +60,17 @@ class MainSellerActivity : AppCompatActivity() {
             startActivity(Intent(applicationContext, LoginActivity::class.java))
         }
 
-        cardProduct.setOnClickListener {
-            startActivity(Intent(applicationContext, ProductListActivity::class.java))
+        tvAddress.setOnClickListener {
+            getUserInfo("address")
         }
-        cardOrder.setOnClickListener {
-            startActivity(Intent(applicationContext, OrderHistoryActivity::class.java))
+        tvProfile.setOnClickListener {
+            getUserInfo("profile")
+        }
 
-        }
 
     }
 
-    private fun getUserInfo() {
+    private fun getUserInfo(action: String) {
         val phone = sharedPref.getString(PreferencesHelper.PREF_USER_PHONE).toString()
         val password = sharedPref.getString(PreferencesHelper.PREF_USER_PASSWORD).toString()
 
@@ -84,14 +88,58 @@ class MainSellerActivity : AppCompatActivity() {
                         Log.e(TAG, "onResponse: $responseBody")
 
                         tvNameProfile.text = user?.name
-                        imgProfile.load(Constant.IMAGE_URL_STORE+user?.image)
+                        imgProfile.load(Constant.IMAGE_URL_STORE + user?.image)
 
-                        if (user?.status == "1"){
+                        if (user?.status == "1") {
                             tvStatusSeller.text = "Aktif"
                             tvStatusSeller.setTextColor(Color.WHITE)
+
+                            cardProduct.setOnClickListener {
+                                startActivity(
+                                    Intent(
+                                        applicationContext,
+                                        ProductListActivity::class.java
+                                    )
+                                )
+                            }
+                            cardOrder.setOnClickListener {
+                                startActivity(
+                                    Intent(
+                                        applicationContext,
+                                        OrderHistoryActivity::class.java
+                                    )
+                                )
+                            }
+                            cardArticle.setOnClickListener {
+                                startActivity(
+                                    Intent(
+                                        applicationContext,
+                                        ArticleListActivity::class.java
+                                    )
+                                )
+                            }
+
                         } else {
                             tvStatusSeller.text = "Non aktif"
                             tvStatusSeller.setTextColor(Color.RED)
+                            cardProduct.setOnClickListener {
+                                Toast.makeText(
+                                    applicationContext,
+                                    "Anda belum bisa menambahkan produk, akun anda belum diverifikasi",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                            cardOrder.setOnClickListener {
+                                Toast.makeText(
+                                    applicationContext,
+                                    "Anda belum bisa menambahkan produk, akun anda belum diverifikasi",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+
+                        }
+                        if (action != ""){
+                            getUser(action,user)
                         }
 
                     } else {
@@ -107,5 +155,48 @@ class MainSellerActivity : AppCompatActivity() {
                 }
 
             })
+    }
+
+    private fun getUser(action: String, user: Model.UserModel?) {
+        val userId = sharedPref.getString(PreferencesHelper.PREF_USER_ID).toString()
+
+        when(action) {
+            "profile" -> {
+                startActivity(
+                    Intent(
+                        applicationContext,
+                        Registration3SellerActivity::class.java
+                    )
+                        .putExtra("action", "edit")
+                        .putExtra("type", "store")
+                        .putExtra("id", userId)
+                        .putExtra("name", user?.name)
+                        .putExtra("phone", user?.phone)
+                        .putExtra("password", user?.password)
+                        .putExtra("province", user?.province)
+                        .putExtra("city", user?.city)
+                        .putExtra("districts", user?.districts)
+                        .putExtra("address", user?.address)
+                )
+            }
+            "address" -> {
+                startActivity(
+                    Intent(
+                        applicationContext,
+                        Registration2SellerActivity::class.java
+                    )
+                        .putExtra("action", "edit")
+                        .putExtra("type", "store")
+                        .putExtra("id", userId)
+                        .putExtra("name", user?.name)
+                        .putExtra("phone", user?.phone)
+                        .putExtra("password", user?.password)
+                        .putExtra("province", user?.province)
+                        .putExtra("city", user?.city)
+                        .putExtra("districts", user?.districts)
+                        .putExtra("address", user?.address)
+                )
+            }
+        }
     }
 }

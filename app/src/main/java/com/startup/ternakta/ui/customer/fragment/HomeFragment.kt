@@ -26,7 +26,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(),ProductAdapter.IUserRecycler {
     private val TAG = "Home"
     private val userType = "customer"
 
@@ -121,7 +121,7 @@ class HomeFragment : Fragment() {
                         if (response.isSuccessful && message == "Success" && isAdded) {
                             Log.e(TAG, "onResponse: $responseBody")
 
-                            val adapterNewProduct = data?.let { ProductAdapter("home", it) }
+                            val adapterNewProduct = data?.let { ProductAdapter("home", it,this@HomeFragment) }
                             rvProductNew.layoutManager = GridLayoutManager(requireActivity(), 2)
                             rvProductNew.adapter = adapterNewProduct
 
@@ -169,7 +169,7 @@ class HomeFragment : Fragment() {
                             }
 
                             if (dataPromo.isNotEmpty()) {
-                                val adapterPromo = ProductAdapter("home_promo", dataPromo)
+                                val adapterPromo = ProductAdapter("home_promo", dataPromo, this@HomeFragment)
                                 rvProductPromo.layoutManager =
                                     GridLayoutManager(requireActivity(), 2)
                                 rvProductPromo.adapter = adapterPromo
@@ -188,6 +188,10 @@ class HomeFragment : Fragment() {
 
                 })
         }
+    }
+
+    override fun refreshView(onUpdate: Boolean) {
+        //
     }
 
 //    private fun dataStatic() {

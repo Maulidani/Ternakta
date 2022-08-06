@@ -7,7 +7,6 @@
     android:paddingHorizontal="18dp"
     tools:context=".ui.admin.UserCustomerListActivity">
 
-
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/parent_head"
         android:layout_width="match_parent"
@@ -41,7 +40,7 @@
         app:layout_constraintTop_toBottomOf="@+id/parent_head" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvOrder"
+        android:id="@+id/rvUserCustomer"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         tools:listitem="@layout/support_simple_spinner_dropdown_item"

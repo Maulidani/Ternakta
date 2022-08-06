@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.ProductListActivity">
+    tools:context=".ui.seller.ArticleListActivity">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/appBar"
@@ -26,7 +26,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.appcompat.widget.AppCompatEditText
-            android:id="@+id/searchProduct"
+            android:id="@+id/searchArticle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="18dp"
@@ -35,7 +35,7 @@
             android:drawableStart="@drawable/ic_search"
             android:drawablePadding="6dp"
             android:gravity="center_vertical"
-            android:hint="Cari ayam"
+            android:hint="Cari artikel"
             android:paddingHorizontal="12dp"
             android:paddingVertical="6dp"
             android:textSize="13sp"
@@ -64,34 +64,35 @@
                 android:orientation="vertical">
 
                 <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvProduct"
+                    android:id="@+id/tvArticle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="18dp"
                     android:layout_marginTop="24dp"
-                    android:text="Semua produk"
+                    android:text="Artikel"
                     android:textColor="@color/black"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvProduct"
+                    android:id="@+id/rvArticle"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_marginHorizontal="14dp"
                     android:layout_marginTop="8dp"
-                    tools:listitem="@layout/item_product" />
+                    tools:listitem="@layout/item_article" />
             </androidx.appcompat.widget.LinearLayoutCompat>
         </ScrollView>
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabAddProduct"
+        android:id="@+id/fabAddArticle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="18dp"
         android:src="@drawable/ic_plus_new"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

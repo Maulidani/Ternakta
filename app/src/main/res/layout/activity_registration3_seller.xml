@@ -33,7 +33,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
         android:gravity="left|top"
-        android:text="Buat akun toko"
+        android:text="Akun toko"
         android:textColor="@color/black"
         android:textSize="16sp"
         android:textStyle="bold"

@@ -12,9 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.startup.ternakta.R
 import com.startup.ternakta.network.Model
 import com.startup.ternakta.ui.OrderDetailActivity
-import com.startup.ternakta.ui.ProductDetailActivity
 import com.startup.ternakta.utils.PreferencesHelper
-
 
 class OrderAdapter(
     private val listProduct: ArrayList<Model.DataModel>,
@@ -24,14 +22,18 @@ class OrderAdapter(
 
     inner class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-         private lateinit var sharedPref: PreferencesHelper
+        private lateinit var sharedPref: PreferencesHelper
         private val id: TextView by lazy { itemView.findViewById(R.id.tvOrderId) }
         private val status: TextView by lazy { itemView.findViewById(R.id.tvStatusOrder) }
         private val item: CardView by lazy { itemView.findViewById(R.id.itemCardOrder) }
 
+        var userType = ""
+        var userId = ""
+
         fun bindData(list: Model.DataModel) {
             sharedPref = PreferencesHelper(itemView.context)
-            val userType = sharedPref.getString(PreferencesHelper.PREF_USER_TYPE).toString()
+            userType = sharedPref.getString(PreferencesHelper.PREF_USER_TYPE).toString()
+            userId = sharedPref.getString(PreferencesHelper.PREF_USER_ID).toString()
 
             id.text = list.id
             if (list.status == "1") {
@@ -43,18 +45,14 @@ class OrderAdapter(
             }
 
             item.setOnClickListener {
-                if (userType == "customer" || userType == "store"){
-                    ContextCompat.startActivity(
-                        itemView.context,
-                        Intent(itemView.context, OrderDetailActivity::class.java)
-                            .putExtra("order_id",list.id)
-                        , null
-                    )
-                } else {
-                    //
-                }
+                ContextCompat.startActivity(
+                    itemView.context,
+                    Intent(itemView.context, OrderDetailActivity::class.java)
+                        .putExtra("order_id", list.id), null
+                )
             }
         }
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
