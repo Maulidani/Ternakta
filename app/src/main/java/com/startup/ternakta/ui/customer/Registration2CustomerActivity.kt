@@ -99,12 +99,16 @@ class Registration2CustomerActivity : AppCompatActivity() {
         imgBack.setOnClickListener { finish() }
 
         imgProfile.setOnClickListener {
-            ImagePicker.with(this)
-                .cropSquare()
-                .compress(512)//Final image size will be less than 512 KB(Optional)
-                .createIntent { intent ->
-                    startForProfileImageResult.launch(intent)
-                }
+            if (userType == "admin") {
+                //
+            } else {
+                ImagePicker.with(this)
+                    .cropSquare()
+                    .compress(512)//Final image size will be less than 512 KB(Optional)
+                    .createIntent { intent ->
+                        startForProfileImageResult.launch(intent)
+                    }
+            }
         }
 
         btnAdd.setOnClickListener {

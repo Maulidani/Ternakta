@@ -20,14 +20,17 @@
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@drawable/ic_profile"
+        android:text="Admin"
+        android:id="@+id/tvAdminLogin"
+        android:drawablePadding="6dp"
+        android:drawableEnd="@drawable/ic_profile"
+        app:layout_constraintBottom_toBottomOf="@+id/parent_head"
         app:layout_constraintRight_toRightOf="parent"
-        android:id="@+id/imgAdmin"
-        app:layout_constraintTop_toTopOf="@+id/parent_head"
-        app:layout_constraintBottom_toBottomOf="@+id/parent_head"/>
+        android:textColor="@color/black"
+        app:layout_constraintTop_toTopOf="@+id/parent_head"/>
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/tvHead"
@@ -53,12 +56,23 @@
         app:layout_constraintTop_toBottomOf="@+id/tvHead" />
 
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvRegistration"
-        android:layout_width="match_parent"
+        android:id="@+id/tvRegistrationInfo"
+        android:layout_width="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
         android:layout_height="wrap_content"
-        android:text="Belum punya akun ? Daftar disini."
+        android:text="Belum punya akun ?"
         android:textColor="@color/black"
         android:textSize="12sp"
+        app:layout_constraintTop_toBottomOf="@+id/tvSubHead" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvRegistration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="  Daftar disini."
+        android:textColor="@color/yellow"
+        android:textSize="12sp"
+        app:layout_constraintLeft_toRightOf="@+id/tvRegistrationInfo"
         app:layout_constraintTop_toBottomOf="@+id/tvSubHead" />
 
     <com.google.android.material.textfield.TextInputLayout
@@ -110,7 +124,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="Masuk sebagai penjual."
-        android:textColor="@color/black"
+        android:textColor="@color/yellow"
         android:textSize="12sp"
         app:layout_constraintTop_toBottomOf="@+id/passwordTextField" />
 
@@ -118,6 +132,7 @@
         android:id="@+id/btnLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
         android:paddingVertical="8dp"
         android:text="Masuk"
         android:textAllCaps="false"
@@ -125,7 +140,6 @@
         android:textStyle="bold"
         app:cornerRadius="8dp"
         app:iconGravity="textStart"
-        android:layout_marginBottom="12dp"
         app:iconPadding="0dp"
         app:layout_constraintBottom_toBottomOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -137,7 +137,7 @@ class ArticleAdapter(
                         val message = responseBody?.message
 
                         if (response.isSuccessful && message == "Success") {
-
+                            Toast.makeText(itemView.context, "Berhasil hapus artikel", Toast.LENGTH_SHORT).show()
                             mListener.refreshView(true)
                             notifyDataSetChanged()
 

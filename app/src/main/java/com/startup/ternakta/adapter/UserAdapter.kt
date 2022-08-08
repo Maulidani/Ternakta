@@ -85,7 +85,7 @@ class UserAdapter(
             if (verification == "verification") {
 
                 val options =
-                    arrayOf("Lihat alamat toko", "Lihat profil toko", "Verifikasi toko ini?")
+                    arrayOf("Lihat alamat", "Lihat profil", "Verifikasi toko ini?")
                 builder.setItems(
                     options
                 ) { _, which ->
@@ -132,7 +132,7 @@ class UserAdapter(
                 dialog.show()
             } else {
 
-                val options = arrayOf("Lihat alamat toko", "Lihat profil toko")
+                val options = arrayOf("Lihat alamat", "Lihat profil")
                 builder.setItems(
                     options
                 ) { _, which ->

@@ -1,8 +1,10 @@
 package com.startup.ternakta.ui
 
 import android.app.Activity
+import android.content.Intent
 import android.graphics.BitmapFactory
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -44,7 +46,8 @@ class OrderDetailActivity : AppCompatActivity() {
     private val tvPrice: TextView by lazy { findViewById(R.id.tvPrice) }
     private val tvCountProduct: TextView by lazy { findViewById(R.id.tvCountProduct) }
     private val tvTotalPrice: TextView by lazy { findViewById(R.id.tvTotalPrice) }
-    private val tvPhoneStore: TextView by lazy { findViewById(R.id.tvPhoneStore) }
+    private val imgPhoneStore: MaterialButton by lazy { findViewById(R.id.imgPhoneStore) }
+    private val tvInfoTransaction: TextView by lazy { findViewById(R.id.tvInfoTransaction) }
 
     private var intentOrderId = ""
 
@@ -65,6 +68,7 @@ class OrderDetailActivity : AppCompatActivity() {
         val userType = sharedPref.getString(PreferencesHelper.PREF_USER_TYPE).toString()
         if (userType == "store") {
             btnVerifition.visibility = View.VISIBLE
+            tvInfoTransaction.visibility = View.GONE
         } else {
             btnVerifition.visibility = View.GONE
         }
@@ -91,9 +95,21 @@ class OrderDetailActivity : AppCompatActivity() {
             for (i in data) {
 
                 if (intentOrderId == i.id) {
-                    imgTrasactionProof.load(Constant.IMAGE_URL_TRANSACTION + i.image_transaction)
+
+                    if (userType == "customer") {
+                        imgPhoneStore.setOnClickListener {
+                            sendMessage("Halo ${i.name}, ", i.phone)
+                        }
+                    } else if (userType == "admin") {
+                        imgPhoneStore.setOnClickListener {
+                            sendMessage("Halo ${i.name}, ", i.phone)
+                        }
+                    }  else {
+                        imgPhoneStore.visibility = View.GONE
+                    }
 
                     if (i.status == "1") {
+                        imgTrasactionProof.load(Constant.IMAGE_URL_TRANSACTION + i.image_transaction)
                         tvStatusOrder.text = "Diverifikasi"
                         tvStatusOrder.setTextColor(Color.BLACK)
                     } else {
@@ -103,10 +119,10 @@ class OrderDetailActivity : AppCompatActivity() {
 
                     tvProductName.text = i.name
 
-                    if (i.price_promo != null) {
-                        tvPrice.text = i.price_promo
-                    } else {
+                    if (i.price_promo == null || i.price_promo == "null") {
                         tvPrice.text = i.price
+                    } else {
+                        tvPrice.text = i.price_promo
                     }
 
                     var itemProduct = 0
@@ -289,8 +305,34 @@ class OrderDetailActivity : AppCompatActivity() {
                 }
 
             })
+    }
 
+    private fun sendMessage(message: String, phone: String){
 
+        // Creating intent with action send
+        val intent = Intent(Intent.ACTION_SEND)
+
+        // Setting Intent type
+        intent.type = "text/plain"
+
+        // Setting whatsapp package name
+        intent.setPackage("com.whatsapp")
+
+        val phoneNumberWithCountryCode = "+62$phone"
+
+        // Starting Whatsapp
+        startActivity(
+            Intent(
+                Intent.ACTION_VIEW,
+                Uri.parse(
+                    String.format(
+                        "https://api.whatsapp.com/send?phone=%s&text=%s",
+                        phoneNumberWithCountryCode,
+                        message
+                    )
+                )
+            )
+        )
     }
 
 }

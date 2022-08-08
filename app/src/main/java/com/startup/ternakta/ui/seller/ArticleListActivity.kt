@@ -94,7 +94,6 @@ class ArticleListActivity : AppCompatActivity(), ArticleAdapter.IUserRecycler {
 
                     } else {
                         Log.e(TAG, "onResponse: $response")
-                        Toast.makeText(applicationContext, "Gagal", Toast.LENGTH_SHORT).show()
                     }
                     swipeRefresh.isRefreshing = false
                 }
@@ -125,16 +124,18 @@ class ArticleListActivity : AppCompatActivity(), ArticleAdapter.IUserRecycler {
 
     override fun refreshView(onUpdate: Boolean) {
 
-        val userType = sharedPref.getString(PreferencesHelper.PREF_USER_TYPE).toString()
-        val userId = sharedPref.getString(PreferencesHelper.PREF_USER_ID).toString()
+        if (onUpdate) {
+            val userType = sharedPref.getString(PreferencesHelper.PREF_USER_TYPE).toString()
+            val userId = sharedPref.getString(PreferencesHelper.PREF_USER_ID).toString()
 
-        if (userType == "store") {
-            fabAddArticle.visibility = View.VISIBLE
-            getArticle(userId,"")
-        } else {
-            fabAddArticle.visibility = View.GONE
-            getArticle("","")
+            if (userType == "store") {
+                fabAddArticle.visibility = View.VISIBLE
+                getArticle(userId, "")
+                finish()
+            } else {
+                fabAddArticle.visibility = View.GONE
+                getArticle("", "")
+            }
         }
-
     }
 }

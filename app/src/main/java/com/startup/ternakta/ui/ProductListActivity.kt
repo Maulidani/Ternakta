@@ -95,7 +95,6 @@ class ProductListActivity : AppCompatActivity(), ProductAdapter.IUserRecycler {
 
                     } else {
                         Log.e(TAG, "onResponse: $response")
-                        Toast.makeText(applicationContext, "Gagal", Toast.LENGTH_SHORT).show()
                     }
                     swipeRefresh.isRefreshing = false
                 }
@@ -126,16 +125,19 @@ class ProductListActivity : AppCompatActivity(), ProductAdapter.IUserRecycler {
 
     override fun refreshView(onUpdate: Boolean) {
 
-        val userType = sharedPref.getString(PreferencesHelper.PREF_USER_TYPE).toString()
-        val userId = sharedPref.getString(PreferencesHelper.PREF_USER_ID).toString()
+        if (onUpdate) {
 
-        if (userType == "store") {
-            fabAddProduct.visibility = View.VISIBLE
-            getProduct(userId,"")
-        } else {
-            fabAddProduct.visibility = View.GONE
-            getProduct("","")
+            val userType = sharedPref.getString(PreferencesHelper.PREF_USER_TYPE).toString()
+            val userId = sharedPref.getString(PreferencesHelper.PREF_USER_ID).toString()
+
+            if (userType == "store") {
+                fabAddProduct.visibility = View.VISIBLE
+                getProduct(userId, "")
+                finish()
+            } else {
+                fabAddProduct.visibility = View.GONE
+                getProduct("", "")
+            }
         }
-
     }
 }

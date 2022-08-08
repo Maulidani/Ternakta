@@ -33,7 +33,7 @@ class LoginActivity : AppCompatActivity() {
     private val tvRegistration : TextView by lazy { findViewById(R.id.tvRegistration) }
     private val inputPhone: TextInputEditText by lazy { findViewById(R.id.inputPhone) }
     private val inputPassword: TextInputEditText by lazy { findViewById(R.id.inputPassword) }
-    private val loginAdmin: ImageView by lazy { findViewById(R.id.imgAdmin) }
+    private val tvAdminLogin: TextView by lazy { findViewById(R.id.tvAdminLogin) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,7 +46,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun onClick(){
 
-        loginAdmin.setOnClickListener {
+        tvAdminLogin.setOnClickListener {
             startActivity(Intent(applicationContext, LoginAdminActivity::class.java))
         }
 

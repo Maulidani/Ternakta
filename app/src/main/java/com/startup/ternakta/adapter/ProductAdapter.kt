@@ -56,31 +56,17 @@ class ProductAdapter(
 
             nameProduct.text = list.name
             priceProduct.text = list.price
-            if (list.price_promo != null) {
-                priceProduct.text = list.price_promo
-            } else {
+            if (list.price_promo == null || list.price_promo == "null") {
                 priceProduct.text = list.price
+            } else {
+                priceProduct.text = list.price_promo
             }
 
             item.setOnClickListener {
                 if (userType == "store") {
                     optionAlert(list)
                 } else {
-                    if (list.price_promo != null) {
-
-                        ContextCompat.startActivity(
-                            itemView.context,
-                            Intent(itemView.context, ProductDetailActivity::class.java)
-                                .putExtra("id",list.id)
-                                .putExtra("store_id",list.user_store_id)
-                                .putExtra("name",list.name)
-                                .putExtra("image",list.image)
-                                .putExtra("price",list.price)
-                                .putExtra("price_promo",list.price_promo)
-                                .putExtra("description",list.description)
-                            , null
-                        )
-                    } else {
+                    if (list.price_promo == null || list.price_promo == "null") {
 
                         ContextCompat.startActivity(
                             itemView.context,
@@ -91,6 +77,20 @@ class ProductAdapter(
                                 .putExtra("image",list.image)
                                 .putExtra("price",list.price)
                                 .putExtra("price_promo","")
+                                .putExtra("description",list.description)
+                            , null
+                        )
+
+                    } else {
+                        ContextCompat.startActivity(
+                            itemView.context,
+                            Intent(itemView.context, ProductDetailActivity::class.java)
+                                .putExtra("id",list.id)
+                                .putExtra("store_id",list.user_store_id)
+                                .putExtra("name",list.name)
+                                .putExtra("image",list.image)
+                                .putExtra("price",list.price)
+                                .putExtra("price_promo",list.price_promo)
                                 .putExtra("description",list.description)
                             , null
                         )
@@ -109,22 +109,7 @@ class ProductAdapter(
             ) { _, which ->
                 when (which) {
                     0 -> {
-                        if (list.price_promo != null) {
-
-                            ContextCompat.startActivity(
-                                itemView.context,
-                                Intent(itemView.context, ProductDetailActivity::class.java)
-                                    .putExtra("id",list.id)
-                                    .putExtra("store_id",list.user_store_id)
-                                    .putExtra("name",list.name)
-                                    .putExtra("image",list.image)
-                                    .putExtra("price",list.price)
-                                    .putExtra("price_promo",list.price_promo)
-                                    .putExtra("description",list.description)
-                                , null
-                            )
-                        } else {
-
+                        if (list.price_promo == null || list.price_promo == "null") {
                             ContextCompat.startActivity(
                                 itemView.context,
                                 Intent(itemView.context, ProductDetailActivity::class.java)
@@ -137,6 +122,21 @@ class ProductAdapter(
                                     .putExtra("description",list.description)
                                 , null
                             )
+
+                        } else {
+                            ContextCompat.startActivity(
+                                itemView.context,
+                                Intent(itemView.context, ProductDetailActivity::class.java)
+                                    .putExtra("id",list.id)
+                                    .putExtra("store_id",list.user_store_id)
+                                    .putExtra("name",list.name)
+                                    .putExtra("image",list.image)
+                                    .putExtra("price",list.price)
+                                    .putExtra("price_promo",list.price_promo)
+                                    .putExtra("description",list.description)
+                                , null
+                            )
+
                         }
                     }
                     1 -> {
@@ -187,7 +187,7 @@ class ProductAdapter(
                         val message = responseBody?.message
 
                         if (response.isSuccessful && message == "Success") {
-
+                            Toast.makeText(itemView.context, "Berhasil hapus produk", Toast.LENGTH_SHORT).show()
                             mListener.refreshView(true)
                             notifyDataSetChanged()
 

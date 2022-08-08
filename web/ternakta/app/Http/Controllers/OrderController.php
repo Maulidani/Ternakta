@@ -92,11 +92,12 @@ class OrderController
             
             $order = Order::join('order_items', 'orders.id', '=', 'order_items.order_id')
                         ->join('products', 'products.id', 'order_items.product_id')
+                        ->join('user_stores', 'user_stores.id', 'orders.user_store_id')
                         ->where('orders.user_customer_id', $user_customer_id)
                         ->orderBy('orders.updated_at', 'DESC')
                         ->get(['orders.*','products.id as product_id','products.name', 
                                 'products.price', 'products.price_promo',
-                                'products.description', 'products.image']
+                                'products.description', 'products.image', 'user_stores.phone as phone']
                     );
             
             $unique = $order->unique('id')->values();
@@ -120,12 +121,13 @@ class OrderController
         } else if($user_store_id != '') {
             
             $order = Order::join('order_items', 'orders.id', '=', 'order_items.order_id')
-                        ->join('products', 'products.id', 'order_items.product_id')
+                        ->join('products', 'products.id', 'order_items.product_id')   
+                        ->join('user_stores', 'user_stores.id', 'orders.user_store_id')
                         ->where('orders.user_store_id', $user_store_id)
                         ->orderBy('orders.updated_at', 'DESC')
                         ->get(['orders.*','products.id as product_id','products.name', 
                                 'products.price', 'products.price_promo',
-                                'products.description', 'products.image']
+                                'products.description', 'products.image','user_stores.phone as phone']
                   );
 
             $unique = $order->unique('id')->values();
@@ -150,10 +152,11 @@ class OrderController
             
             $order = Order::join('order_items', 'orders.id', '=', 'order_items.order_id')
                         ->join('products', 'products.id', 'order_items.product_id')
+                        ->join('user_stores', 'user_stores.id', 'orders.user_store_id')
                         ->orderBy('orders.updated_at', 'DESC')
                         ->get(['orders.*','products.id as product_id','products.name', 
                                 'products.price', 'products.price_promo',
-                                'products.description', 'products.image']
+                                'products.description', 'products.image','user_stores.phone as phone']
                   );
 
             $unique = $order->unique('id')->values();

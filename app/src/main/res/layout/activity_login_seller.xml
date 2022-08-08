@@ -43,14 +43,27 @@
         android:textSize="12sp"
         app:layout_constraintTop_toBottomOf="@+id/tvHead" />
 
+
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/tvRegistration"
-        android:layout_width="match_parent"
+        android:id="@+id/tvRegistrationInfo"
+        android:layout_width="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
         android:layout_height="wrap_content"
-        android:text="Belum punya akun ? Daftar disini."
+        android:text="Belum punya akun ?"
         android:textColor="@color/black"
         android:textSize="12sp"
         app:layout_constraintTop_toBottomOf="@+id/tvSubHead" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvRegistration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="  Daftar disini."
+        android:textColor="@color/yellow"
+        android:textSize="12sp"
+        app:layout_constraintLeft_toRightOf="@+id/tvRegistrationInfo"
+        app:layout_constraintTop_toBottomOf="@+id/tvSubHead" />
+
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/phoneTextField"

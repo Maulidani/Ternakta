@@ -2,11 +2,13 @@ package com.startup.ternakta.ui.seller
 
 import android.content.Intent
 import android.graphics.Color
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import coil.load
@@ -55,11 +57,11 @@ class MainSellerActivity : AppCompatActivity() {
 
     private fun onClick() {
         tvOtherLogout.setOnClickListener {
-            sharedPref.logout()
-            finish()
-            startActivity(Intent(applicationContext, LoginActivity::class.java))
+          deleteAlert()
         }
-
+        tvCallCenter.setOnClickListener {
+            sendMessage("Halo... ")
+        }
         tvAddress.setOnClickListener {
             getUserInfo("address")
         }
@@ -136,6 +138,13 @@ class MainSellerActivity : AppCompatActivity() {
                                     Toast.LENGTH_SHORT
                                 ).show()
                             }
+                            cardArticle.setOnClickListener {
+                                Toast.makeText(
+                                    applicationContext,
+                                    "Anda belum bisa menambahkan produk, akun anda belum diverifikasi",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
 
                         }
                         if (action != ""){
@@ -171,6 +180,7 @@ class MainSellerActivity : AppCompatActivity() {
                         .putExtra("type", "store")
                         .putExtra("id", userId)
                         .putExtra("name", user?.name)
+                        .putExtra("image", user?.image)
                         .putExtra("phone", user?.phone)
                         .putExtra("password", user?.password)
                         .putExtra("province", user?.province)
@@ -189,6 +199,7 @@ class MainSellerActivity : AppCompatActivity() {
                         .putExtra("type", "store")
                         .putExtra("id", userId)
                         .putExtra("name", user?.name)
+                        .putExtra("image", user?.image)
                         .putExtra("phone", user?.phone)
                         .putExtra("password", user?.password)
                         .putExtra("province", user?.province)
@@ -198,5 +209,49 @@ class MainSellerActivity : AppCompatActivity() {
                 )
             }
         }
+    }
+    private fun deleteAlert() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Keluar")
+        builder.setMessage("Yakin untuk keluar ?")
+
+        builder.setPositiveButton("Ya") { _, _ ->
+            sharedPref.logout()
+            finish()
+            startActivity(Intent(applicationContext, LoginActivity::class.java))
+        }
+
+        builder.setNegativeButton("Tidak") { _, _ ->
+            // cancel
+        }
+        builder.show()
+    }
+
+    private fun sendMessage(message:String){
+
+            // Creating intent with action send
+            val intent = Intent(Intent.ACTION_SEND)
+
+            // Setting Intent type
+            intent.type = "text/plain"
+
+            // Setting whatsapp package name
+            intent.setPackage("com.whatsapp")
+
+            val phoneNumberWithCountryCode = Constant.PHONE_ADMIN
+
+            // Starting Whatsapp
+            startActivity(
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse(
+                        String.format(
+                            "https://api.whatsapp.com/send?phone=%s&text=%s",
+                            phoneNumberWithCountryCode,
+                            message
+                        )
+                    )
+                )
+            )
     }
 }

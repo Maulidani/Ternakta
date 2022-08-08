@@ -7,12 +7,14 @@ import com.google.android.material.button.MaterialButton
 import com.startup.ternakta.R
 
 object Constant {
-    const val BASE_URL = "http://192.168.137.5:8000"
+//    const val BASE_URL = "http://192.168.88.5:8000"
+    const val BASE_URL = "https://ternakta.com"
     const val IMAGE_URL_STORE = "$BASE_URL/image/user_store/"
     const val IMAGE_URL_CUSTOMER = "$BASE_URL/image/user_customer/"
     const val IMAGE_URL_PRODUCT = "$BASE_URL/image/product/"
     const val IMAGE_URL_ARTICLE = "$BASE_URL/image/article/"
     const val IMAGE_URL_TRANSACTION = "$BASE_URL/image/transaction_proof/"
+    const val PHONE_ADMIN = "+62082344035420"
 
     fun MaterialButton.setShowProgress(showProgress: Boolean?) {
 

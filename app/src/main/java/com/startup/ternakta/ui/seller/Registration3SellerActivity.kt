@@ -89,6 +89,7 @@ class Registration3SellerActivity : AppCompatActivity() {
             inputName.setText(intentName)
             inputPhone.setText(intentPhone)
             inputPassword.setText(intentPassword)
+            Toast.makeText(applicationContext, Constant.IMAGE_URL_STORE + intentImage, Toast.LENGTH_SHORT).show()
             if (intentType == "customer") {
                 imgProfile.load(Constant.IMAGE_URL_CUSTOMER + intentImage)
             } else if (intentType == "store") {
@@ -119,12 +120,16 @@ class Registration3SellerActivity : AppCompatActivity() {
         imgBack.setOnClickListener { finish() }
 
         imgProfile.setOnClickListener {
-            ImagePicker.with(this)
-                .cropSquare()
-                .compress(512)//Final image size will be less than 512 KB(Optional)
-                .createIntent { intent ->
-                    startForProfileImageResult.launch(intent)
-                }
+            if (userType == "admin") {
+                //
+            } else {
+                ImagePicker.with(this)
+                    .cropSquare()
+                    .compress(512)//Final image size will be less than 512 KB(Optional)
+                    .createIntent { intent ->
+                        startForProfileImageResult.launch(intent)
+                    }
+            }
         }
 
         btnAdd.setOnClickListener {
@@ -420,7 +425,7 @@ class Registration3SellerActivity : AppCompatActivity() {
         val partName: RequestBody = name.toRequestBody("text/plain".toMediaTypeOrNull())
         val partPhone: RequestBody = phone.toRequestBody("text/plain".toMediaTypeOrNull())
         val partPassword: RequestBody = password.toRequestBody("text/plain".toMediaTypeOrNull())
-        val partType: RequestBody = userType.toRequestBody("text/plain".toMediaTypeOrNull())
+        val partType: RequestBody = "store".toRequestBody("text/plain".toMediaTypeOrNull())
         val partNull: RequestBody = "0".toRequestBody("text/plain".toMediaTypeOrNull())
 
         ApiClient.instances.addUser(
@@ -442,7 +447,6 @@ class Registration3SellerActivity : AppCompatActivity() {
             ) {
                 val responseBody = response.body()
                 val message = responseBody?.message
-                val user = responseBody?.user
 
                 if (response.isSuccessful && message == "Success") {
                     Log.e(TAG, "onResponse: $responseBody")

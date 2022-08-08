@@ -69,7 +69,7 @@ class UserController
 
                         $add_user = new UserStore;
                         $add_user->business_permit = $business_permit;
-                        $add_user->name = $request->name;
+                        $add_user->name = $name;
                         $add_user->image = $filename;
                         $add_user->phone = $phone;
                         $add_user->password = $password;
@@ -86,7 +86,7 @@ class UserController
                         $image->move(public_path() . '/image/user_customer/', $filename);
 
                         $add_user = new UserCustomer;
-                        $add_user->name = $request->name;
+                        $add_user->name = $name;
                         $add_user->image = $filename;
                         $add_user->phone = $phone;
                         $add_user->password = $password;

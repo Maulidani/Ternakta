@@ -3,6 +3,7 @@ package com.startup.ternakta.ui.admin
 import android.content.Intent
 import android.os.Bundle
 import android.widget.ImageView
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.cardview.widget.CardView
 import com.startup.ternakta.R
@@ -34,9 +35,7 @@ class MainAdminActivity : AppCompatActivity() {
     private fun onClick() {
 
         logout.setOnClickListener {
-            sharedPref.logout()
-            finish()
-            startActivity(Intent(applicationContext, LoginActivity::class.java))
+           deleteAlert()
         }
 
         cardSeller.setOnClickListener {
@@ -52,5 +51,22 @@ class MainAdminActivity : AppCompatActivity() {
             startActivity(Intent(applicationContext, OrderHistoryActivity::class.java))
         }
 
+    }
+
+    private fun deleteAlert() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle("Keluar")
+        builder.setMessage("Yakin untuk keluar ?")
+
+        builder.setPositiveButton("Ya") { _, _ ->
+            sharedPref.logout()
+            finish()
+            startActivity(Intent(applicationContext, LoginActivity::class.java))
+        }
+
+        builder.setNegativeButton("Tidak") { _, _ ->
+            // cancel
+        }
+        builder.show()
     }
 }

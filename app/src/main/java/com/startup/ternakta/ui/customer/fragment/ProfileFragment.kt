@@ -1,6 +1,7 @@
 package com.startup.ternakta.ui.customer.fragment
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,7 +10,9 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import coil.load
 import com.startup.ternakta.R
 import com.startup.ternakta.network.ApiClient
@@ -29,6 +32,8 @@ class ProfileFragment : Fragment() {
     private val TAG = "Profile"
     private val userType = "customer"
     private lateinit var sharedPref: PreferencesHelper
+
+    lateinit var swipeRefresh: SwipeRefreshLayout
 
     private lateinit var tvNameProfile: TextView
     private lateinit var tvPhoneProfile: TextView
@@ -65,6 +70,13 @@ class ProfileFragment : Fragment() {
             tvAddress = requireView().findViewById(R.id.tvAddress)
             tvCallCenter = requireView().findViewById(R.id.tvOtherCS)
             tvLogout = requireView().findViewById(R.id.tvOtherLogout)
+            swipeRefresh = requireView().findViewById(R.id.swipeRefreshProfile)
+
+            swipeRefresh.isRefreshing = true
+
+            swipeRefresh.setOnRefreshListener {
+                getUserInfo("")
+            }
 
             imgMore.setOnClickListener {
                 getUserInfo("imgMore")
@@ -76,15 +88,10 @@ class ProfileFragment : Fragment() {
                 getUserInfo("address")
             }
             tvCallCenter.setOnClickListener {
-                //
+                sendMessage("Halo...  ")
             }
             tvLogout.setOnClickListener {
-                sharedPref.logout()
-                Toast.makeText(requireContext(), "Keluar", Toast.LENGTH_SHORT).show()
-                activity?.finish()
-                startActivity(
-                    Intent(requireContext(), LoginActivity::class.java)
-                )
+               deleteAlert()
             }
         }
     }
@@ -97,6 +104,7 @@ class ProfileFragment : Fragment() {
 
     private fun getUserInfo(action: String) {
         if (isAdded) {
+            swipeRefresh.isRefreshing = true
 
             tvNameProfile = requireView().findViewById(R.id.tvNameProfile)
             tvPhoneProfile = requireView().findViewById(R.id.tvPhoneProfile)
@@ -174,11 +182,13 @@ class ProfileFragment : Fragment() {
                             Log.e(TAG, "onResponse: $response")
 
                         }
+                        swipeRefresh.isRefreshing = false
 
                     }
 
                     override fun onFailure(call: Call<Model.ResponseModel>, t: Throwable) {
                         Log.e(TAG, "onResponse: ${t.message}")
+                        swipeRefresh.isRefreshing = false
 
                     }
 
@@ -186,4 +196,55 @@ class ProfileFragment : Fragment() {
         }
     }
 
+    private fun deleteAlert() {
+        if (isAdded) {
+            val builder = AlertDialog.Builder(requireContext())
+            builder.setTitle("Keluar")
+            builder.setMessage("Yakin untuk keluar ?")
+
+            builder.setPositiveButton("Ya") { _, _ ->
+                sharedPref.logout()
+                activity?.finish()
+                startActivity(
+                    Intent(requireContext(), LoginActivity::class.java)
+                )
+            }
+
+            builder.setNegativeButton("Tidak") { _, _ ->
+                // cancel
+            }
+            builder.show()
+        }
+    }
+
+    private fun sendMessage(message:String){
+
+        if (isAdded) {
+            // Creating intent with action send
+            val intent = Intent(Intent.ACTION_SEND)
+
+            // Setting Intent type
+            intent.type = "text/plain"
+
+            // Setting whatsapp package name
+            intent.setPackage("com.whatsapp")
+
+            val phoneNumberWithCountryCode = Constant.PHONE_ADMIN
+
+            // Starting Whatsapp
+            startActivity(
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse(
+                        String.format(
+                            "https://api.whatsapp.com/send?phone=%s&text=%s",
+                            phoneNumberWithCountryCode,
+                            message
+                        )
+                    )
+                )
+            )
+
+        }
+    }
 }
