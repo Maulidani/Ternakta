@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
@@ -22,19 +21,20 @@ import com.startup.ternakta.model.SliderItem
 import com.startup.ternakta.network.ApiClient
 import com.startup.ternakta.network.Model
 import com.startup.ternakta.ui.ProductListActivity
+import com.startup.ternakta.utils.Constant
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class HomeFragment : Fragment(),ProductAdapter.IUserRecycler {
+class HomeFragment : Fragment(), ProductAdapter.IUserRecycler {
     private val TAG = "Home"
     private val userType = "customer"
 
     var sliderItem = ArrayList<SliderItem>()
     lateinit var rvProductPromo: RecyclerView
     lateinit var rvProductNew: RecyclerView
-    lateinit var appBar :ConstraintLayout
-    lateinit var tvShowAllNewAdded :TextView
+    lateinit var appBar: ConstraintLayout
+    lateinit var tvShowAllNewAdded: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -66,7 +66,7 @@ class HomeFragment : Fragment(),ProductAdapter.IUserRecycler {
         getProduct()
     }
 
-    private fun onClick(){
+    private fun onClick() {
 
         if (isAdded) {
             appBar = requireView().findViewById(R.id.appBar)
@@ -86,15 +86,13 @@ class HomeFragment : Fragment(),ProductAdapter.IUserRecycler {
 
     private fun getBanner() {
         if (isAdded) {
-            val image1 =
-                "https://img.freepik.com/free-vector/online-shopping-isometric-landing-page-template-web-banner-purple-background_88138-451.jpg?w=740&t=st=1656926462~exp=1656927062~hmac=0e41c487cb0c62b6fe4479722706501c8426997ae931801fd1d29d6ae244a6bf"
-            val image2 =
-                "https://img.freepik.com/free-vector/gradient-10-10-background_157027-577.jpg?w=740&t=st=1656926532~exp=1656927132~hmac=01b73444a25dfd30f9ddc8ba70392a6324622580f820e83d9bb8a2dbd4c6af4d"
-            val image3 =
-                "https://img.freepik.com/free-vector/sale-banner-template-background_157027-660.jpg?t=st=1656894181~exp=1656894781~hmac=d6bf1147b5cc78eeab6f4c9733e4a6591d759086618bf862d8171f980310662d&w=996"
+            val image1 = "${Constant.IMAGE_URL_ARTICLE}banner_1.png"
+            val image2 = "${Constant.IMAGE_URL_ARTICLE}banner_2.png"
+            val image3 = "${Constant.IMAGE_URL_ARTICLE}banner_3.png"
 
-            sliderItem.add(SliderItem("name 01", "description 01", image1))
-            sliderItem.add(SliderItem("name 02", "description 02", image2))
+            sliderItem.add(SliderItem("banner 01", "description 01", image1))
+            sliderItem.add(SliderItem("banner 02", "description 02", image2))
+            sliderItem.add(SliderItem("banner 03", "description 03", image3))
 
             val sliderBanner: SliderView = requireActivity().findViewById(R.id.sliderBanner)
             sliderBanner.setSliderAdapter(SliderBannerAdapter(sliderItem))
@@ -121,7 +119,8 @@ class HomeFragment : Fragment(),ProductAdapter.IUserRecycler {
                         if (response.isSuccessful && message == "Success" && isAdded) {
                             Log.e(TAG, "onResponse: $responseBody")
 
-                            val adapterNewProduct = data?.let { ProductAdapter("home", it,this@HomeFragment) }
+                            val adapterNewProduct =
+                                data?.let { ProductAdapter("home", it, this@HomeFragment) }
                             rvProductNew.layoutManager = GridLayoutManager(requireActivity(), 2)
                             rvProductNew.adapter = adapterNewProduct
 
@@ -169,7 +168,8 @@ class HomeFragment : Fragment(),ProductAdapter.IUserRecycler {
                             }
 
                             if (dataPromo.isNotEmpty()) {
-                                val adapterPromo = ProductAdapter("home_promo", dataPromo, this@HomeFragment)
+                                val adapterPromo =
+                                    ProductAdapter("home_promo", dataPromo, this@HomeFragment)
                                 rvProductPromo.layoutManager =
                                     GridLayoutManager(requireActivity(), 2)
                                 rvProductPromo.adapter = adapterPromo

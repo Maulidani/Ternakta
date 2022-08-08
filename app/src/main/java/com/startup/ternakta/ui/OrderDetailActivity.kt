@@ -109,10 +109,15 @@ class OrderDetailActivity : AppCompatActivity() {
                     }
 
                     if (i.status == "1") {
-                        imgTrasactionProof.load(Constant.IMAGE_URL_TRANSACTION + i.image_transaction)
+                        if (i.image_transaction != null) {
+                            imgTrasactionProof.load(Constant.IMAGE_URL_TRANSACTION + i.image_transaction)
+                        }
                         tvStatusOrder.text = "Diverifikasi"
                         tvStatusOrder.setTextColor(Color.BLACK)
                     } else {
+                        if (i.image_transaction != null) {
+                            imgTrasactionProof.load(Constant.IMAGE_URL_TRANSACTION + i.image_transaction)
+                        }
                         tvStatusOrder.text = "Belum diverifikasi"
                         tvStatusOrder.setTextColor(Color.RED)
                     }
