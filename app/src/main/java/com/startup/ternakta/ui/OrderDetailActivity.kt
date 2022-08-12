@@ -98,11 +98,11 @@ class OrderDetailActivity : AppCompatActivity() {
 
                     if (userType == "customer") {
                         imgPhoneStore.setOnClickListener {
-                            sendMessage("Halo ${i.name}, ", i.phone)
+                            sendMessage("Halo , ", i.phone)
                         }
                     } else if (userType == "admin") {
                         imgPhoneStore.setOnClickListener {
-                            sendMessage("Halo ${i.name}, ", i.phone)
+                            sendMessage("Halo , ", i.phone)
                         }
                     }  else {
                         imgPhoneStore.visibility = View.GONE
