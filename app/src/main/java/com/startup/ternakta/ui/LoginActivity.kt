@@ -64,7 +64,8 @@ class LoginActivity : AppCompatActivity() {
             startActivity(Intent(applicationContext, LoginSellerActivity::class.java))
         }
         tvRegistration.setOnClickListener {
-            startActivity(Intent(applicationContext, RegistrationCustomerActivity::class.java))
+//            startActivity(Intent(applicationContext, RegistrationCustomerActivity::class.java))
+            startActivity(Intent(applicationContext, Registration2CustomerActivity::class.java))
         }
     }
 
