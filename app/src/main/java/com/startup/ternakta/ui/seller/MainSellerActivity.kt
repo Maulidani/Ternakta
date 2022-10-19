@@ -127,21 +127,36 @@ class MainSellerActivity : AppCompatActivity() {
                             cardProduct.setOnClickListener {
                                 Toast.makeText(
                                     applicationContext,
-                                    "Anda belum bisa menambahkan produk, akun anda belum diverifikasi",
+                                    "Belum tersedia, akun anda belum diverifikasi",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                Toast.makeText(
+                                    applicationContext,
+                                    "hubungi call center, untuk verifikasi",
                                     Toast.LENGTH_SHORT
                                 ).show()
                             }
                             cardOrder.setOnClickListener {
                                 Toast.makeText(
                                     applicationContext,
-                                    "Anda belum bisa menambahkan produk, akun anda belum diverifikasi",
+                                    "Belum tersedia, akun anda belum diverifikasi",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                Toast.makeText(
+                                    applicationContext,
+                                    "hubungi call center, untuk verifikasi",
                                     Toast.LENGTH_SHORT
                                 ).show()
                             }
                             cardArticle.setOnClickListener {
                                 Toast.makeText(
                                     applicationContext,
-                                    "Anda belum bisa menambahkan produk, akun anda belum diverifikasi",
+                                    "Belum tersedia, akun anda belum diverifikasi",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                                Toast.makeText(
+                                    applicationContext,
+                                    "hubungi call center, untuk verifikasi",
                                     Toast.LENGTH_SHORT
                                 ).show()
                             }

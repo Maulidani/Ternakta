@@ -89,7 +89,7 @@ class Registration3SellerActivity : AppCompatActivity() {
             inputName.setText(intentName)
             inputPhone.setText(intentPhone)
             inputPassword.setText(intentPassword)
-            Toast.makeText(applicationContext, Constant.IMAGE_URL_STORE + intentImage, Toast.LENGTH_SHORT).show()
+
             if (intentType == "customer") {
                 imgProfile.load(Constant.IMAGE_URL_CUSTOMER + intentImage)
             } else if (intentType == "store") {

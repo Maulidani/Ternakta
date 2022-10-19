@@ -1,8 +1,10 @@
 package com.startup.ternakta.ui.customer
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -60,12 +62,41 @@ class RegistrationCustomerActivity : AppCompatActivity() {
         intentDistricts = intent.getStringExtra("districts").toString()
         intentAddress = intent.getStringExtra("address").toString()
 
+        if (intentProvince == "null" || intentProvince == null) {
+            inputProvince.setText("")
+        } else {
+            inputProvince.setText(intentProvince)
+        }
+        if (intentCity == "null" || intentCity == null) {
+            inputCity.setText("")
+        } else {
+            inputCity.setText(intentCity)
+        }
+        if (intentDistricts == "null" || intentDistricts == null) {
+            inputDistricts.setText("")
+        } else {
+            inputDistricts.setText(intentDistricts)
+        }
+        if (intentAddress == "null" || intentAddress == null) {
+            inputAddress.setText("")
+        } else {
+            inputAddress.setText(intentAddress)
+        }
+
         if (intentAction == "edit") {
             btnNext.text = "Edit alamat"
-            inputProvince.setText(intentProvince)
-            inputCity.setText(intentCity)
-            inputDistricts.setText(intentDistricts)
-            inputAddress.setText(intentAddress)
+
+        } else if (intentAction == "view") {
+
+            btnNext.visibility = View.GONE
+            inputProvince.setTextColor(Color.BLACK)
+            inputCity.setTextColor(Color.BLACK)
+            inputDistricts.setTextColor(Color.BLACK)
+            inputAddress.setTextColor(Color.BLACK)
+            inputProvince.isEnabled = false
+            inputCity.isEnabled = false
+            inputDistricts.isEnabled = false
+            inputAddress.isEnabled = false
         }
         onClick()
     }

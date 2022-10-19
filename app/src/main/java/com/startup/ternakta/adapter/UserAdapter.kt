@@ -70,8 +70,12 @@ class UserAdapter(
             nameUser.text = list.name
 
             item.setOnClickListener {
-                if (_type == "store" && list.status != "1") {
-                    optionAlert(list, "verification")
+                if (_type == "store") {
+                    if (list.status != "1") {
+                        optionAlert(list, "verification")
+                    } else {
+                        optionAlert(list, "product")
+                    }
                 } else {
                     optionAlert(list, "")
 
@@ -86,6 +90,54 @@ class UserAdapter(
 
                 val options =
                     arrayOf("Lihat alamat", "Lihat profil", "Verifikasi toko ini?")
+                builder.setItems(
+                    options
+                ) { _, which ->
+                    when (which) {
+                        0 -> {
+                            ContextCompat.startActivity(
+                                itemView.context,
+                                Intent(itemView.context, Registration2SellerActivity::class.java)
+                                    .putExtra("action", "view")
+                                    .putExtra("type", _type)
+                                    .putExtra("id", userId)
+                                    .putExtra("name", list.name)
+                                    .putExtra("image", list.image)
+                                    .putExtra("phone", list.phone)
+                                    .putExtra("password", list.password)
+                                    .putExtra("province", list.province)
+                                    .putExtra("city", list.city)
+                                    .putExtra("districts", list.districts)
+                                    .putExtra("address", list.address), null
+                            )
+
+                        }
+                        1 -> {
+                            ContextCompat.startActivity(
+                                itemView.context,
+                                Intent(itemView.context, Registration3SellerActivity::class.java)
+                                    .putExtra("action", "view")
+                                    .putExtra("type", _type)
+                                    .putExtra("id", userId)
+                                    .putExtra("name", list.name)
+                                    .putExtra("image", list.image)
+                                    .putExtra("phone", list.phone)
+                                    .putExtra("password", list.password)
+                                    .putExtra("province", list.province)
+                                    .putExtra("city", list.city)
+                                    .putExtra("districts", list.districts)
+                                    .putExtra("address", list.address), null
+                            )
+                        }
+                        2 -> verificationAlert(list)
+                    }
+                }
+                val dialog: AlertDialog = builder.create()
+                dialog.show()
+            } else if (verification == "product") {
+
+                val options =
+                    arrayOf("Lihat alamat", "Lihat profil", "Lihat Produk")
                 builder.setItems(
                     options
                 ) { _, which ->

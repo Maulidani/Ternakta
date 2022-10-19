@@ -49,7 +49,6 @@ class Registration2SellerActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_registration2_seller)
 
-
         sharedPref = PreferencesHelper(applicationContext)
         userType = sharedPref.getString(PreferencesHelper.PREF_USER_TYPE).toString()
 
@@ -65,26 +64,41 @@ class Registration2SellerActivity : AppCompatActivity() {
         intentDistricts = intent.getStringExtra("districts").toString()
         intentAddress = intent.getStringExtra("address").toString()
 
+        if (intentProvince == "null" || intentProvince == null) {
+            inputProvince.setText("")
+        } else {
+            inputProvince.setText(intentProvince)
+        }
+        if (intentCity == "null" || intentCity == null) {
+            inputCity.setText("")
+        } else {
+            inputCity.setText(intentCity)
+        }
+        if (intentDistricts == "null" || intentDistricts == null) {
+            inputDistricts.setText("")
+        } else {
+            inputDistricts.setText(intentDistricts)
+        }
+        if (intentAddress == "null" || intentAddress == null) {
+            inputAddress.setText("")
+        } else {
+            inputAddress.setText(intentAddress)
+        }
+
         if (intentAction == "edit") {
             btnNext.text = "Edit alamat"
-            inputProvince.setText(intentProvince)
-            inputCity.setText(intentCity)
-            inputDistricts.setText(intentDistricts)
-            inputAddress.setText(intentAddress)
-        }else if (intentAction == "view") {
+
+        } else if (intentAction == "view") {
             tvHead.text = "Alamat"
+
             btnNext.visibility = View.GONE
             inputProvince.setTextColor(Color.BLACK)
             inputCity.setTextColor(Color.BLACK)
             inputDistricts.setTextColor(Color.BLACK)
             inputAddress.setTextColor(Color.BLACK)
-            inputProvince.setText(intentProvince)
             inputProvince.isEnabled = false
-            inputCity.setText(intentCity)
             inputCity.isEnabled = false
-            inputDistricts.setText(intentDistricts)
             inputDistricts.isEnabled = false
-            inputAddress.setText(intentAddress)
             inputAddress.isEnabled = false
         }
         onClick()
