@@ -7,8 +7,8 @@ import com.google.android.material.button.MaterialButton
 import com.startup.ternakta.R
 
 object Constant {
-    const val BASE_URL = "http://192.168.66.5:8000"
-//    const val BASE_URL = "https://ternakta.com"
+//    const val BASE_URL = "http://192.168.66.5:8000"
+    const val BASE_URL = "https://ternakta.com"
     const val IMAGE_URL_STORE = "$BASE_URL/image/user_store/"
     const val IMAGE_URL_CUSTOMER = "$BASE_URL/image/user_customer/"
     const val IMAGE_URL_PRODUCT = "$BASE_URL/image/product/"
