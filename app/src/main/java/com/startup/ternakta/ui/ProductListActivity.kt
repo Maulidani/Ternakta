@@ -6,6 +6,7 @@ import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.addTextChangedListener
@@ -31,15 +32,19 @@ class ProductListActivity : AppCompatActivity(), ProductAdapter.IUserRecycler {
     val rvProduct: RecyclerView by lazy { findViewById(R.id.rvProduct) }
 
     private val imgBack:ImageView by lazy { findViewById(R.id.imgBack) }
+    private val tvHead:TextView by lazy { findViewById(R.id.tvProduct) }
     private val search:EditText by lazy { findViewById(R.id.searchProduct) }
     private val swipeRefresh:SwipeRefreshLayout by lazy { findViewById(R.id.swipeRefreshProduct) }
     private val fabAddProduct:FloatingActionButton by lazy { findViewById(R.id.fabAddProduct) }
+
+    private var intentStoreId = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_product_list)
 
         sharedPref = PreferencesHelper(applicationContext)
+        intentStoreId = intent.getStringExtra("store_id").toString()
 
         swipeRefresh.isRefreshing = true
 
@@ -55,6 +60,10 @@ class ProductListActivity : AppCompatActivity(), ProductAdapter.IUserRecycler {
         search.addTextChangedListener {
             if (userType == "store") {
                 getProduct(userId,it.toString())
+            } else if (userType == "admin") {
+                tvHead.text = "Produk"
+                fabAddProduct.visibility = View.GONE
+                getProduct(intentStoreId,it.toString())
             } else {
                 getProduct("",it.toString())
             }
@@ -63,6 +72,10 @@ class ProductListActivity : AppCompatActivity(), ProductAdapter.IUserRecycler {
         swipeRefresh.setOnRefreshListener {
             if (userType == "store") {
                 getProduct(userId,search.text.toString())
+            } else if (userType == "admin") {
+                tvHead.text = "Produk"
+                fabAddProduct.visibility = View.GONE
+                getProduct(intentStoreId,search.text.toString())
             } else {
                 getProduct("",search.text.toString())
             }
@@ -93,7 +106,14 @@ class ProductListActivity : AppCompatActivity(), ProductAdapter.IUserRecycler {
                         rvProduct.layoutManager = GridLayoutManager(applicationContext, 2);
                         rvProduct.adapter = adapterProduct
 
+                        if (data != null) {
+                            if (data.isEmpty())
+                                Toast.makeText(applicationContext, "Tidak ada produk", Toast.LENGTH_SHORT).show()
+                        } else {
+                            Toast.makeText(applicationContext, "Tidak ada produk", Toast.LENGTH_SHORT).show()
+                        }
                     } else {
+                        Toast.makeText(applicationContext, "Tidak ada produk", Toast.LENGTH_SHORT).show()
                         Log.e(TAG, "onResponse: $response")
                     }
                     swipeRefresh.isRefreshing = false
@@ -117,7 +137,11 @@ class ProductListActivity : AppCompatActivity(), ProductAdapter.IUserRecycler {
         if (userType == "store") {
             fabAddProduct.visibility = View.VISIBLE
             getProduct(userId,"")
-        } else {
+        } else if (userType == "admin") {
+            tvHead.text = "Produk"
+            fabAddProduct.visibility = View.GONE
+            getProduct(intentStoreId,search.text.toString())
+        }  else {
             fabAddProduct.visibility = View.GONE
             getProduct("","")
         }
@@ -134,7 +158,11 @@ class ProductListActivity : AppCompatActivity(), ProductAdapter.IUserRecycler {
                 fabAddProduct.visibility = View.VISIBLE
                 getProduct(userId, "")
                 finish()
-            } else {
+            } else if (userType == "admin") {
+                tvHead.text = "Produk"
+                fabAddProduct.visibility = View.GONE
+                getProduct(intentStoreId,search.text.toString())
+            }  else {
                 fabAddProduct.visibility = View.GONE
                 getProduct("", "")
             }

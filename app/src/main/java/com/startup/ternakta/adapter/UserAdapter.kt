@@ -16,6 +16,7 @@ import coil.load
 import com.startup.ternakta.R
 import com.startup.ternakta.network.ApiClient
 import com.startup.ternakta.network.Model
+import com.startup.ternakta.ui.ProductListActivity
 import com.startup.ternakta.ui.seller.Registration2SellerActivity
 import com.startup.ternakta.ui.seller.Registration3SellerActivity
 import com.startup.ternakta.utils.Constant
@@ -177,7 +178,14 @@ class UserAdapter(
                                     .putExtra("address", list.address), null
                             )
                         }
-                        2 -> verificationAlert(list)
+                        2 -> {
+                            ContextCompat.startActivity(
+                                itemView.context,
+                                Intent(itemView.context, ProductListActivity::class.java)
+                                    .putExtra("action", "view")
+                                    .putExtra("store_id", list.id), null
+                            )
+                        }
                     }
                 }
                 val dialog: AlertDialog = builder.create()
